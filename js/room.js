@@ -2,6 +2,7 @@
 import { THREE } from './three.js';
 import { DOOR, ROOM, byId } from './config.js';
 import { std, rbox, add, rod, rng, TAU } from './util.js';
+import { buildDeskWorker } from './character.js';
 import {
     plankTexture, whiteboardTexture, awardTexture, stickyTexture, spineTexture, envelopeTexture,
     keyboardTexture, signTexture, monitorTexture,
@@ -10,6 +11,7 @@ import {
 export function buildRoom({ scene, world, register, entries }) {
     // Materials and lights the time of day changes; scene.js drives them.
     const lights = { mood: [] };
+    let deskWorker;
     /* ---------- room shell ---------- */
     // A closed box that runs well past the camera, so the view is filled with room at any aspect ratio.
     {
@@ -125,8 +127,8 @@ export function buildRoom({ scene, world, register, entries }) {
 
         // chair
         const chair = new THREE.Group();
-        chair.position.set(0.4, 0, -1.45);
-        chair.rotation.y = Math.PI + 0.45;
+        chair.position.set(0.45, 0, -1.65);
+        chair.rotation.y = Math.PI;
         const seat = std(0x1f4e8c, { roughness: 0.7 }), dark = std(0x1c2b3a, { roughness: 0.5 }), chrome = std(0xb7c1cc, { roughness: 0.3, metalness: 0.5 });
         for (let i = 0; i < 5; i++) {
             const a = (i / 5) * TAU;
@@ -140,6 +142,7 @@ export function buildRoom({ scene, world, register, entries }) {
         const backrest = add(chair, rbox(0.46, 0.46, 0.06, 0.03), seat, [0, 0.82, -0.25]);
         backrest.rotation.x = -0.12;
         world.add(chair);
+        deskWorker = buildDeskWorker(chair);
 
         // plant
         const plant = new THREE.Group();
@@ -378,5 +381,5 @@ export function buildRoom({ scene, world, register, entries }) {
         world.add(g);
     }
 
-    return { skyMat, calendarPage, robot, door, lights };
+    return { skyMat, calendarPage, robot, door, lights, deskWorker };
 }

@@ -55,7 +55,7 @@ export async function initScene() {
         return entry;
     }
 
-    const { skyMat, calendarPage, robot, door, lights } = buildRoom({ scene, world, register, entries });
+    const { skyMat, calendarPage, robot, door, lights, deskWorker } = buildRoom({ scene, world, register, entries });
 
     /* ---------- time of day ---------- */
     // Night is a late study session: the room goes dim and cool, and the warm lamps take over.
@@ -467,6 +467,7 @@ export async function initScene() {
         }
 
         updateRobot(dt, t);
+        deskWorker.update(t, reduceMotion);
         const doorGoal = glowing?.def.id === 'door' ? -0.55 : 0;
         door.open += (doorGoal - door.open) * (1 - Math.exp(-dt * 6));
         door.hinge.rotation.y = door.open;

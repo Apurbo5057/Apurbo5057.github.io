@@ -26,6 +26,7 @@ switches lighting. Arrow keys switch panels; Escape closes them.
 - `classic.html`: generated mirror; regenerate after changing templates.
 - `js/config.js`: sections, markers, camera framing, visitor settings.
 - `js/room.js`: room geometry, education books, and award frames.
+- `js/character.js`: seated desk worker and subtle typing animation.
 - `js/textures.js`: canvas roadmap, monitor, calendar, and books.
 - `js/clock.js`: Dhaka clock and daylight settings.
 - `css/office.css`: office styles; `css/classic.css`: plain page styles.
