@@ -1,12 +1,13 @@
 // Renderer, lights, pointer interaction, camera and the frame loop.
-import { THREE } from './three.js?v=13';
-import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from './config.js?v=13';
-import { UP, setMaxAnisotropy } from './util.js?v=13';
-import { dhakaNow, onDaylight } from './clock.js?v=13';
-import { skyTexture, calendarTexture } from './textures.js?v=13';
-import { buildRoom } from './room.js?v=13';
-import { state, view, markers, measureLabels, openPanel, closePanel, showSceneError, canvas, panel, tooltip } from './ui.js?v=13';
-import { exitOffice } from './lobby.js?v=13';
+import { CAMP_TARGET } from './campsite.js?v=19';
+import { THREE } from './three.js?v=19';
+import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from './config.js?v=19';
+import { UP, setMaxAnisotropy } from './util.js?v=19';
+import { dhakaNow, onDaylight } from './clock.js?v=19';
+import { skyTexture, calendarTexture } from './textures.js?v=19';
+import { buildRoom } from './room.js?v=19';
+import { state, view, markers, measureLabels, openPanel, closePanel, showSceneError, canvas, panel, tooltip } from './ui.js?v=19';
+import { exitOffice } from './lobby.js?v=19';
 
 async function fontsReady() {
     if (!document.fonts) return;
@@ -69,14 +70,32 @@ export async function initScene() {
     }
     document.querySelector('[data-action="greet"]').addEventListener('click', greetWorker);
 
+    let atCampfire = false;
+    const campButton = document.querySelector('[data-action="campfire"]');
+    function setCampfire(active) {
+        atCampfire = active;
+        if (active) closePanel();
+        camera.fov = active ? (innerWidth < 820 ? 100 : 58) : OVERVIEW.fov;
+        camera.updateProjectionMatrix();
+        remeasure();
+        document.body.classList.toggle('at-campfire', active);
+        campButton.textContent = active ? 'Back to the tent ↩' : 'Campfire ♫';
+        campButton.setAttribute('aria-pressed', String(active));
+        if (!active) document.dispatchEvent(new Event('campfire-leave'));
+    }
+    campButton.addEventListener('click', () => setCampfire(!atCampfire));
+    document.addEventListener('click', (e) => {
+        if (atCampfire && e.target.closest('[data-id], [data-action="tour"], [data-action="exit"], [data-action="greet"], [data-action="home"]')) setCampfire(false);
+    });
+
     /* ---------- time of day ---------- */
     // Night is a late study session: the room goes dim and cool, and the warm lamps take over.
     // The ambient light never drops far enough to make the whiteboard or the frames hard to read.
     const LIGHTING = {
-        day:   { hemi: 2.0,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.4,  tint: 0xffffff, lamp: 0,    mood: 0, ceiling: 0xe9eef5, panels: 0xffffff, wallGlow: 0.3 },
-        dawn:  { hemi: 1.8,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.1,  tint: 0xffe6d2, lamp: 0.35, mood: 0, ceiling: 0xe9e6e6, panels: 0xfff3e2, wallGlow: 0.25 },
-        dusk:  { hemi: 1.7,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.0,  tint: 0xffdcc0, lamp: 0.6,  mood: 0, ceiling: 0xe6e0e2, panels: 0xffecd6, wallGlow: 0.25 },
-        night: { hemi: 1.15, sky: 0xb7c9b4, ground: 0x384b37, sun: 0.35, tint: 0xc2d6c3, lamp: 2.6,  mood: 1, ceiling: 0x2b3450, panels: 0x46507a, wallGlow: 0.05 },
+        day:   { hemi: 2.0,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.4,  tint: 0xffffff, lamp: 0,    mood: 0 },
+        dawn:  { hemi: 1.8,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.1,  tint: 0xffe6d2, lamp: 0.35, mood: 0 },
+        dusk:  { hemi: 1.7,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.0,  tint: 0xffdcc0, lamp: 0.6,  mood: 0 },
+        night: { hemi: 1.15, sky: 0xb7c9b4, ground: 0x384b37, sun: 0.35, tint: 0xc2d6c3, lamp: 2.6,  mood: 1 },
     };
     let clockLabel = '';
     setInterval(() => { clockLabel = dhakaNow().label; }, 20_000);
@@ -97,9 +116,6 @@ export async function initScene() {
         sun.color.set(L.tint);
         lights.lamp.light.intensity = L.lamp;
         lights.lamp.bulb.emissiveIntensity = L.lamp > 0 ? 2.5 : 0.15;
-        lights.ceiling.color.set(L.ceiling);
-        lights.panels.color.set(L.panels);
-        lights.rightWall.emissiveIntensity = L.wallGlow;
         for (const m of lights.mood) {
             m.light.intensity = m.power * L.mood;
             m.glow.color.set(L.mood ? m.on : m.off);
@@ -284,6 +300,12 @@ export async function initScene() {
 
     const tmpV = new THREE.Vector3(), camRight = new THREE.Vector3(), camUp = new THREE.Vector3();
     function updateGoal() {
+        if (atCampfire) {
+            cam.goalTarget.copy(CAMP_TARGET);
+            cam.goalPos.set(3, 1.8, -3.7);
+            cam.goalOx = 0; cam.goalOy = 0;
+            return;
+        }
         const R = cam.region;
         if (state.current) {
             cam.goalOx = innerWidth / 2 - (R.left + R.right) / 2;
@@ -322,6 +344,7 @@ export async function initScene() {
         const W = innerWidth, H = innerHeight;
         renderer.setSize(W, H);
         measureLabels();
+        camera.fov = atCampfire ? (W < 820 ? 100 : 58) : OVERVIEW.fov;
         camera.aspect = W / H;
         camera.updateProjectionMatrix();
         remeasure();

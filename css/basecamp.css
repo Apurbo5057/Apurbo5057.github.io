@@ -65,6 +65,11 @@ h1,h2,h3,h4,.brand { font-family:'Lora',Georgia,serif; }
 .timeline li::before { background:#c4d296; }
 .classic { background:var(--bg)!important; }
 .classic main section { border-radius:8px; }
+.camp-sound,.camp-caption { display:none; }
+.at-campfire #markers,.at-campfire .hint,.at-campfire .greeting { display:none; }
+.at-campfire .camp-sound { display:block; position:fixed; bottom:144px; left:50%; transform:translateX(-50%); z-index:5; padding:12px 20px; white-space:nowrap; font-size:13px; border:1px solid var(--line); border-radius:6px; background:var(--glass-strong); color:var(--ink); }
+.at-campfire .camp-caption { display:block; position:fixed; bottom:90px; left:16px; right:16px; width:fit-content; max-width:calc(100vw - 32px); margin:0 auto; padding:8px 14px; border-radius:6px; background:var(--glass); text-align:center; color:var(--ink); font-family:'Lora',Georgia,serif; font-style:italic; font-size:13px; line-height:1.5; }
+.at-campfire [data-action="campfire"] { background:#dec18a; color:#263a27; }
 @media(max-width:1000px) { .lobby-row { gap:35px; padding-inline:5vw; } .trail-card { padding:24px; } .plate h1 { font-size:58px; } }
 @media(max-width:820px) {
  .topbar { padding:14px 16px; } .brand { font-size:17px; } .top-left { gap:8px; }

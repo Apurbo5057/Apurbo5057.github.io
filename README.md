@@ -4,9 +4,11 @@ Personal portfolio for **Md. Mosharaf Hossain Apurbo**, CSE undergraduate at BUE
 
 Live site: **https://apurbo5057.github.io/**
 
-An original mountain Basecamp landing and open-air forest study with seven
-research panels, a Dhaka clock, day/night lighting, and night fireflies,
-and a plain HTML portfolio at `classic.html`. No package installation or build
+An original mountain Basecamp landing and furnished canvas tent with seven
+research panels, a Dhaka clock, day/night lighting, and night fireflies.
+Outside, three animated campers gather around a nighttime fire. The Campfire
+button visits the clearing; optional original music starts only after pressing Play.
+There is also a plain HTML portfolio at `classic.html`. No package installation or build
 is needed to run it. Three.js is version-pinned in `js/three.js`; fonts and
 Three.js load from CDNs. The plain page works without JavaScript, WebGL, or CDNs.
 Visitor tracking is disabled.
@@ -30,6 +32,9 @@ for a friendly wave and heart. Reduced-motion visitors get a still greeting.
 - `classic.html`: generated mirror; regenerate after changing templates.
 - `js/config.js`: sections, markers, camera framing, visitor settings.
 - `js/room.js`: timber deck, education books, and award frames.
+- `js/tent.js`: stitched canvas, poles, ropes, tied-back flaps, and deck steps.
+- `js/campsite.js`: stone fire ring, logs, flames, guitar, and seated campers.
+- `js/camp-music.js`: opt-in original synthesized music; stops on leaving the campfire.
 - `js/landscape.js`: original procedural mountains, pines, ferns, and fireflies.
 - `assets/img/basecamp.svg`: original illustrated mountain landscape.
 - `js/character.js`: seated desk worker and subtle typing animation.

@@ -1,6 +1,6 @@
 // A compact, procedural desk worker. Local +z faces the keyboard.
-import { THREE } from './three.js?v=13';
-import { std, rbox, add, rod } from './util.js?v=13';
+import { THREE } from './three.js?v=19';
+import { std, rbox, add, rod } from './util.js?v=19';
 
 export function buildDeskWorker(chair) {
     const person = new THREE.Group();

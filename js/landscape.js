@@ -1,6 +1,7 @@
 // Original procedural mountain scenery: no models, stock photos, or texture downloads.
-import { THREE } from './three.js?v=13';
-import { add, std, rng } from './util.js?v=13';
+import { THREE } from './three.js?v=19';
+import { buildCampsite } from './campsite.js?v=19';
+import { add, std, rng } from './util.js?v=19';
 
 export function buildLandscape(world) {
     const backdrop = new THREE.MeshBasicMaterial({ toneMapped: false });
@@ -40,27 +41,30 @@ export function buildLandscape(world) {
     }
     for (let i = 0; i < 36; i++) {
         const x = -15 + random() * 30;
-        pine(x, -8 - random() * 5, 1.4 + random() * 1.8);
+        const z = -8 - random() * 5;
+        if (Math.hypot(x-3,z+6.8)>2.8) pine(x, z, 1.4 + random() * 1.8);
     }
     for (const [x, z, height] of [[-4.4, -2, 3.6], [4.8, -2.5, 4.2], [-4.7, 1, 3], [5.2, 1.4, 3.4]]) pine(x, z, height);
     // Ferns growing beside the timber deck.
     for (let i = 0; i < 18; i++) {
         const side = i % 2 ? 1 : -1;
         const fern = add(world, new THREE.IcosahedronGeometry(0.25 + random() * 0.18, 0),
-            needles[i % 2], [side * (3.1 + random() * 0.6), 0.1, -2 + random() * 6]);
+            needles[i % 2], [side * (3.8 + random() * 0.6), -.25, -2 + random() * 6]);
         fern.scale.y = 0.5;
     }
     const fireflyMaterial = new THREE.MeshBasicMaterial({ color: 0xe6d78f, transparent: true, opacity: 0.8, toneMapped: false });
     const fireflies = Array.from({ length: 18 }, (_, i) => {
-        const origin = new THREE.Vector3(-3.7 + random() * 7.4, 0.7 + random() * 1.9, -4 + random() * 3);
+        const origin = new THREE.Vector3(-3.7 + random() * 7.4, 0.7 + random() * 1.9, -5 + random() * 1.5);
         const fly = add(world, new THREE.SphereGeometry(0.012, 6, 4), fireflyMaterial, origin.toArray(), { cast: false, receive: false });
         return { fly, origin, seed: i * 1.7 };
     });
+    const campsite = buildCampsite(world);
     let night = true;
     return {
         skyMat: backdrop,
-        setPhase(phase) { night = phase === 'night'; fireflies.forEach(({ fly }) => { fly.visible = night; }); },
+        setPhase(phase) { campsite.setPhase(phase); night = phase === 'night'; fireflies.forEach(({ fly }) => { fly.visible = night; }); },
         update(time, reducedMotion) {
+            campsite.update(time, reducedMotion);
             if (!night || reducedMotion) return;
             for (const { fly, origin, seed } of fireflies) {
                 fly.position.set(origin.x + Math.sin(time * 0.25 + seed) * 0.18,

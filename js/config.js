@@ -1,5 +1,5 @@
 // What's in the room and how the camera frames it. Edit this file to add, move or rename sections.
-import { THREE } from './three.js?v=13';
+import { THREE } from './three.js?v=19';
 
 
 // Tour order. anchor = marker position; target/dir/size = camera framing when focused.

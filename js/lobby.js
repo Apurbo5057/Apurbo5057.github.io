@@ -1,7 +1,7 @@
 // The entrance: a hallway wall with the office door, a profile plate and a notice board.
 // Opening the door zooms through the doorway into the 3D room that is already running behind it.
-import { HOTSPOTS, reduceMotion, canHover } from './config.js?v=13';
-import { state, body, openPanel, closePanel } from './ui.js?v=13';
+import { HOTSPOTS, reduceMotion, canHover } from './config.js?v=19';
+import { state, body, openPanel, closePanel } from './ui.js?v=19';
 
 const lobby = document.getElementById('lobby');
 const doorway = lobby.querySelector('.doorway');

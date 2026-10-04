@@ -1,13 +1,14 @@
 // The room and everything in it. Each hotspot object is a group registered under its section id.
-import { THREE } from './three.js?v=13';
-import { DOOR, ROOM, byId } from './config.js?v=13';
-import { std, rbox, add, rod, rng, TAU } from './util.js?v=13';
-import { buildLandscape } from './landscape.js?v=13';
-import { buildDeskWorker } from './character.js?v=13';
+import { THREE } from './three.js?v=19';
+import { DOOR, ROOM, byId } from './config.js?v=19';
+import { std, rbox, add, rod, rng, TAU } from './util.js?v=19';
+import { buildTent } from './tent.js?v=19';
+import { buildLandscape } from './landscape.js?v=19';
+import { buildDeskWorker } from './character.js?v=19';
 import {
     plankTexture, whiteboardTexture, awardTexture, stickyTexture, spineTexture, envelopeTexture,
     keyboardTexture, signTexture, monitorTexture,
-} from './textures.js?v=13';
+} from './textures.js?v=19';
 
 export function buildRoom({ scene, world, register, entries }) {
     // Materials and lights the time of day changes; scene.js drives them.
@@ -15,6 +16,7 @@ export function buildRoom({ scene, world, register, entries }) {
     let deskWorker;
     const landscape = buildLandscape(world);
     const skyMat = landscape.skyMat;
+    buildTent(world);
     /* ---------- open-air timber deck ---------- */
     {
         const planks = plankTexture();
@@ -23,14 +25,6 @@ export function buildRoom({ scene, world, register, entries }) {
         const floor = add(world, new THREE.PlaneGeometry(6, ROOM.depth), std(0xd0b38a, { map: planks, roughness: .9 }), [0, 0, 2], { cast: false });
         floor.rotation.x = -Math.PI / 2;
         const timber = std(0x73563b);
-        lights.ceiling = new THREE.MeshBasicMaterial({ color: 0xe9eef5 });
-        lights.panels = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        lights.rightWall = std(0x73563b, { emissive: 0x73563b });
-        for (const x of [-3, 3]) {
-            for (const z of [-3, 0, 3, 6]) add(world, rbox(.09, .9, .09, .015), timber, [x, .45, z]);
-            add(world, rbox(.12, .09, 10, .01), timber, [x, .88, 2]);
-        }
-        add(world, rbox(6, .09, .12, .01), timber, [0, .88, -3.1]);
         // Freestanding cedar supports for the research board and collected milestones.
         for (const z of [-2.6, -.2]) add(world, rbox(.09, 2.5, .09, .01), timber, [-3.06, 1.25, z]);
         add(world, rbox(.09, .09, 2.5, .01), timber, [-3.06, 2.47, -1.4]);
@@ -48,7 +42,7 @@ export function buildRoom({ scene, world, register, entries }) {
         add(world, rbox(0.05, 0.72, 0.92, 0.01), navy, [1.9, 0.36, -2.5]);
         add(world, rbox(2.6, 0.34, 0.03, 0.01), navy, [0.55, 0.5, -2.92]);
         // drawer cabinet
-        const cab = std(0xdcd4b8);
+        const cab = std(0xb99867, { roughness: .9 });
         add(world, rbox(0.46, 0.62, 0.8, 0.015), cab, [1.58, 0.33, -2.5]);
         for (const y of [0.48, 0.2]) add(world, rbox(0.16, 0.025, 0.02, 0.008), navy, [1.58, y, -2.095]);
 
@@ -119,18 +113,16 @@ export function buildRoom({ scene, world, register, entries }) {
         const chair = new THREE.Group();
         chair.position.set(0.45, 0, -1.65);
         chair.rotation.y = Math.PI;
-        const seat = std(0x345541, { roughness: 0.7 }), dark = std(0x1c2b3a, { roughness: 0.5 }), chrome = std(0xb7c1cc, { roughness: 0.3, metalness: 0.5 });
-        for (let i = 0; i < 5; i++) {
-            const a = (i / 5) * TAU;
-            const leg = add(chair, rbox(0.035, 0.03, 0.3, 0.01), dark, [Math.sin(a) * 0.15, 0.07, Math.cos(a) * 0.15]);
-            leg.rotation.y = a;
-            add(chair, new THREE.SphereGeometry(0.025, 10, 8), dark, [Math.sin(a) * 0.29, 0.025, Math.cos(a) * 0.29]);
+        const seat = std(0x667454, { roughness: 1 }), frame = std(0x745337);
+        // A canvas camp chair on four timber feet, with crossed side braces.
+        for (const x of [-.23,.23]) {
+            rod(chair,new THREE.Vector3(x,.03,-.23),new THREE.Vector3(x,.48,.22),.024,frame);
+            rod(chair,new THREE.Vector3(x,.03,.23),new THREE.Vector3(x,.48,-.22),.024,frame);
+            rod(chair,new THREE.Vector3(x,.42,-.23),new THREE.Vector3(x,1.06,-.28),.022,frame);
         }
-        add(chair, new THREE.CylinderGeometry(0.025, 0.025, 0.34, 12), chrome, [0, 0.24, 0]);
-        add(chair, rbox(0.5, 0.08, 0.48, 0.035), seat, [0, 0.44, 0]);
-        add(chair, rbox(0.05, 0.3, 0.03, 0.01), dark, [0, 0.58, -0.24]);
-        const backrest = add(chair, rbox(0.46, 0.46, 0.06, 0.03), seat, [0, 0.82, -0.25]);
-        backrest.rotation.x = -0.12;
+        add(chair,rbox(.5,.05,.48,.016),seat,[0,.45,0]);
+        add(chair,rbox(.43,.42,.025,.009),seat,[0,.83,-.26]);
+        rod(chair,new THREE.Vector3(-.24,1.05,-.28),new THREE.Vector3(.24,1.05,-.28),.023,frame);
         world.add(chair);
         deskWorker = buildDeskWorker(chair);
 
@@ -175,8 +167,8 @@ export function buildRoom({ scene, world, register, entries }) {
     {
         const g = new THREE.Group();
         g.position.set(-2.2, 0, -2.77);
-        const frame = std(0xf6f7f9, { roughness: 0.6 });
-        add(g, new THREE.BoxGeometry(1.2, 2.1, 0.015), std(0xd9e3ef), [0, 1.05, -0.2]);
+        const frame = std(0x94734e, { roughness: 0.9 });
+        add(g, new THREE.BoxGeometry(1.2, 2.1, 0.015), std(0x68513a), [0, 1.05, -0.2]);
         for (const x of [-0.6, 0.6]) add(g, rbox(0.035, 2.1, 0.42, 0.008), frame, [x, 1.05, 0]);
         const levels = [0.04, 0.52, 1.0, 1.48, 1.96];
         for (const y of levels) add(g, rbox(1.2, 0.035, 0.42, 0.008), frame, [0, y, 0]);
@@ -253,6 +245,9 @@ export function buildRoom({ scene, world, register, entries }) {
             f.scale.setScalar(1.2);
             add(f, rbox(0.5, 0.4, 0.03, 0.008), gold, [0, 0, 0]);
             add(f, new THREE.PlaneGeometry(0.44, 0.344), std(0xffffff, { map: awardTexture(a), roughness: 0.5 }), [0, 0, 0.0155], { cast: false });
+            const cord = std(0xbda77c);
+            rod(world,new THREE.Vector3(f.position.x-.17,2.73,-3.02),new THREE.Vector3(f.position.x,2.63,-2.98),.008,cord);
+            rod(world,new THREE.Vector3(f.position.x+.17,2.73,-3.02),new THREE.Vector3(f.position.x,2.63,-2.98),.008,cord);
             g.add(f);
         });
         register(byId.recognition, g);

@@ -1,7 +1,7 @@
 // Visitor counter on the lobby plate. GitHub Pages has no server, so the number lives in Abacus
 // (https://abacus.jasoncameron.dev), a free public counter API. If it is unreachable the line
 // simply stays hidden.
-import { VISITOR_COUNTER } from './config.js?v=13';
+import { VISITOR_COUNTER } from './config.js?v=19';
 
 const el = document.getElementById('visitors');
 const API = 'https://abacus.jasoncameron.dev';
