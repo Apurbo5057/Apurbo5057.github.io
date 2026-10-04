@@ -1,12 +1,12 @@
 // Renderer, lights, pointer interaction, camera and the frame loop.
-import { THREE } from './three.js';
-import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from './config.js';
-import { UP, setMaxAnisotropy } from './util.js';
-import { dhakaNow, onDaylight } from './clock.js?v=7';
-import { skyTexture, calendarTexture } from './textures.js?v=7';
-import { buildRoom } from './room.js?v=7';
-import { state, view, markers, measureLabels, openPanel, closePanel, showSceneError, canvas, panel, tooltip } from './ui.js';
-import { exitOffice } from './lobby.js?v=7';
+import { THREE } from './three.js?v=8';
+import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from './config.js?v=8';
+import { UP, setMaxAnisotropy } from './util.js?v=8';
+import { dhakaNow, onDaylight } from './clock.js?v=8';
+import { skyTexture, calendarTexture } from './textures.js?v=8';
+import { buildRoom } from './room.js?v=8';
+import { state, view, markers, measureLabels, openPanel, closePanel, showSceneError, canvas, panel, tooltip } from './ui.js?v=8';
+import { exitOffice } from './lobby.js?v=8';
 
 async function fontsReady() {
     if (!document.fonts) return;
@@ -55,7 +55,7 @@ export async function initScene() {
         return entry;
     }
 
-    const { skyMat, calendarPage, robot, door, lights, deskWorker } = buildRoom({ scene, world, register, entries });
+    const { skyMat, calendarPage, robot, door, lights, deskWorker, landscape } = buildRoom({ scene, world, register, entries });
     deskWorker.group.userData.entry = {
         def: { id: 'desk-worker', kind: 'gesture' }, group: deskWorker.group,
     };
@@ -76,12 +76,13 @@ export async function initScene() {
         day:   { hemi: 2.0,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.4,  tint: 0xffffff, lamp: 0,    mood: 0, ceiling: 0xe9eef5, panels: 0xffffff, wallGlow: 0.3 },
         dawn:  { hemi: 1.8,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.1,  tint: 0xffe6d2, lamp: 0.35, mood: 0, ceiling: 0xe9e6e6, panels: 0xfff3e2, wallGlow: 0.25 },
         dusk:  { hemi: 1.7,  sky: 0xffffff, ground: 0xd9ccb6, sun: 2.0,  tint: 0xffdcc0, lamp: 0.6,  mood: 0, ceiling: 0xe6e0e2, panels: 0xffecd6, wallGlow: 0.25 },
-        night: { hemi: 1.15, sky: 0xa9b9ee, ground: 0x4a4460, sun: 0.35, tint: 0xb9c8ff, lamp: 2.6,  mood: 1, ceiling: 0x2b3450, panels: 0x46507a, wallGlow: 0.05 },
+        night: { hemi: 1.15, sky: 0xb7c9b4, ground: 0x384b37, sun: 0.35, tint: 0xc2d6c3, lamp: 2.6,  mood: 1, ceiling: 0x2b3450, panels: 0x46507a, wallGlow: 0.05 },
     };
     let clockLabel = '';
     setInterval(() => { clockLabel = dhakaNow().label; }, 20_000);
     onDaylight(({ now, phase }) => {
         clockLabel = now.label;
+        landscape.setPhase(phase);
         skyMat.map?.dispose();
         skyMat.map = skyTexture(phase);
         skyMat.needsUpdate = true;
@@ -250,6 +251,8 @@ export async function initScene() {
         fitCam.updateProjectionMatrix();
         const shape = camera.aspect < 0.9 ? 'narrow' : 'wide';
         const O = OVERVIEW[shape];
+        // Keep the desk centered on portrait screens; the other trails remain a drag away.
+        if (shape === 'narrow') return { ...O, dist: 8.3, ox: 0, oy: 0 };
         const dir = new THREE.Vector3().setFromSpherical(new THREE.Spherical(1, O.phi, O.theta));
         // Farthest the camera can back away along `dir` before it leaves the room.
         const dMax = Math.min((CAMERA_BOUNDS.max.x - O.target.x) / dir.x, (CAMERA_BOUNDS.max.z - O.target.z) / dir.z);
@@ -483,6 +486,7 @@ export async function initScene() {
 
         updateRobot(dt, t);
         deskWorker.update(t, reduceMotion);
+        landscape.update(t, reduceMotion);
         const doorGoal = glowing?.def.id === 'door' ? -0.55 : 0;
         door.open += (doorGoal - door.open) * (1 - Math.exp(-dt * 6));
         door.hinge.rotation.y = door.open;

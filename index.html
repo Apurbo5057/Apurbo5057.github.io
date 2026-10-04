@@ -1,25 +1,26 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Md. Mosharaf Hossain Apurbo — CSE undergraduate at BUET researching Physical AI, efficient on-device machine learning, sign language understanding, and graph algorithms.">
-    <title>Apurbo | Research Office</title>
+    <title>Apurbo | Basecamp</title>
     <!-- Link previews (LinkedIn, Slack, X, KakaoTalk …) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://apurbo5057.github.io/">
-    <meta property="og:title" content="Apurbo — walk into my research office">
-    <meta property="og:description" content="Step into Apurbo’s office: research at BUET, on-device AI, sign language papers, algorithms, and engineering projects.">
+    <meta property="og:title" content="Apurbo — a curious mind, a quieter place">
+    <meta property="og:description" content="Explore Apurbo’s mountain basecamp: research at BUET, on-device AI, sign language papers, algorithms, and engineering projects.">
     <meta property="og:image" content="https://apurbo5057.github.io/assets/img/office-preview.jpg">
     <meta property="og:image:width" content="1920">
-    <meta property="og:image:height" content="945">
+    <meta property="og:image:height" content="889">
     <link rel="canonical" href="https://apurbo5057.github.io/">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231f4e8c%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EMA%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="css/office.css?v=7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23285343%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EMA%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/office.css?v=8">
+    <link rel="stylesheet" href="css/basecamp.css?v=8">
 </head>
 <body data-theme="night">
 
@@ -30,7 +31,7 @@
     <!-- Top bar -->
     <nav class="topbar">
         <div class="top-left">
-            <a class="brand" href="#" data-action="home">Apurbo <span>· Research Office</span></a>
+            <a class="brand" href="#" data-action="home">Apurbo <span>· Basecamp</span></a>
             <!-- Live Dhaka time; js/clock.js fills it in and uses it to pick the day or night theme. -->
             <button class="clock" id="clock" title="Dhaka time — click to switch between day and night">
                 <span class="clock-icon" aria-hidden="true"></span>
@@ -39,68 +40,47 @@
             </button>
         </div>
         <div class="top-links">
-            <button class="only-inside" data-action="exit">← Lobby</button>
+            <button class="only-inside" data-action="exit">← Basecamp</button>
             <a class="hide-sm" href="assets/cv/Apurbo-CV.pdf" target="_blank" rel="noopener">CV</a>
             <a class="hide-sm" href="classic.html">Classic site ↗</a>
         </div>
     </nav>
 
-    <!-- Lobby: the wall outside the office. Everything here is plain HTML, readable without 3D. -->
-    <section class="lobby" id="lobby" aria-label="Entrance">
-        <div class="lobby-row">
-            <header class="plate">
-                <p class="eyebrow">Research Office</p>
-                <div class="plate-head">
-                    <img src="assets/img/monogram.svg" alt="MA monogram for Md. Mosharaf Hossain Apurbo">
-                    <div>
-                        <h1>Apurbo</h1><p class="full-name">Md. Mosharaf Hossain Apurbo</p>
-                        <p class="plate-role">CSE Undergraduate · BUET</p>
-                    </div>
-                </div>
-                <p class="plate-affil"><a href="https://cse.buet.ac.bd/" target="_blank" rel="noopener">Computer Science &amp; Engineering</a><br>Bangladesh University of Engineering and Technology</p>
-                <p class="plate-tagline">I build <strong>AI that works beyond the screen</strong> — from efficient wearable vision to agentic workflows, with a foundation in algorithms and systems.</p>
-                <ul class="plate-stats">
-                    <li><b>2</b><span>Accepted papers</span></li>
-                    <li><b>5</b><span>Selected projects</span></li>
-                    <li><b>0.72M</b><span>SpatialNet parameters</span></li>
-                </ul>
-                <div class="plate-links">
-                    <a class="btn btn-primary" href="mailto:mosharaf.apurbo57@gmail.com">Email</a>
-                    <a class="btn btn-ghost" href="assets/cv/Apurbo-CV.pdf" target="_blank" rel="noopener">CV</a>
-                    <a class="btn btn-ghost" href="https://github.com/Apurbo5057" target="_blank" rel="noopener">GitHub</a>
-                    <a class="btn btn-ghost" href="https://www.linkedin.com/in/m-a-hossain-884aa52a0/" target="_blank" rel="noopener">LinkedIn</a>
-                </div>
-                <p class="only-sm">Prefer a plain page? <a href="classic.html">Classic site ↗</a></p>
-                <p class="visitors" id="visitors" hidden><span class="dot"></span>You are visitor <b></b> — thanks for stopping by.</p>
-            </header>
-
-            <div class="door">
-                <!-- The doorway is a hole in the wall: the 3D office shows through once the leaf swings open. -->
-                <div class="doorway">
-                    <button class="door-leaf" data-action="enter" aria-label="Open the door and enter the office">
-                        <span class="door-sign"><b>Apurbo</b><small>Come in — it’s open</small></span>
-                        <span class="door-inset"></span>
-                        <span class="door-knob"></span>
-                    </button>
-                </div>
-                <button class="door-cta" data-action="enter" tabindex="-1" aria-hidden="true">Open the door <span>→</span></button>
-            </div>
-
-            <aside class="board" aria-label="Notice board">
-                <p class="eyebrow">Notice board</p>
-                <div class="note">
-                    <p class="phd-badge"><span class="dot"></span>Research &amp; engineering</p>
-                    <h2>Small models. Real-world impact.</h2>
-                    <p>Exploring Physical AI, on-device learning, and agentic systems. Get in touch:
-                    <a href="mailto:mosharaf.apurbo57@gmail.com">mosharaf.apurbo57@gmail.com</a></p>
-                </div>
-                <h3 class="board-sub">Latest news</h3>
-                <ul class="board-news" id="lobby-news"></ul>
-                <h3 class="board-sub board-dir">Inside the office</h3>
-                <div class="board-directory board-dir" id="lobby-directory"></div>
-            </aside>
+    <!-- Basecamp: an accessible field guide into the forest study. -->
+    <section class="lobby" id="lobby" aria-label="Apurbo's Basecamp">
+      <div class="lobby-row">
+        <header class="plate">
+          <p class="eyebrow">APURBO’S BASECAMP / PERSONAL FIELD NOTES</p>
+          <h1>A curious mind.<br><em>A quieter place.</em></h1>
+          <p class="full-name">Md. Mosharaf Hossain Apurbo</p>
+          <p class="plate-role">Computer Science &amp; Engineering · BUET</p>
+          <p class="plate-tagline">I find wonder in <strong>mountains, nature, and ideas</strong>. I’m building learning systems that work beyond the screen — and this is my little clearing on the internet.</p>
+          <div class="plate-links">
+            <a class="btn btn-primary" href="mailto:mosharaf.apurbo57@gmail.com">Let’s talk ↗</a>
+            <a class="btn btn-ghost" href="assets/cv/Apurbo-CV.pdf" target="_blank" rel="noopener">Read my CV</a>
+            <a class="btn btn-ghost" href="https://github.com/Apurbo5057" target="_blank" rel="noopener">GitHub ↗</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/m-a-hossain-884aa52a0/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+          <ul class="trail-stats"><li><b>02</b><span>Accepted papers</span></li><li><b>05</b><span>Selected projects</span></li><li><b>BUET</b><span>Where I’m learning</span></li></ul>
+          <p class="visitors" id="visitors" hidden><span class="dot"></span>You are visitor <b></b> — welcome to the clearing.</p>
+        </header>
+        <div class="basecamp-side">
+          <div class="trail-card">
+            <p class="eyebrow">A SMALL DETOUR, A DIFFERENT VIEW</p>
+            <h2>Between code<br>and the canopy.</h2>
+            <p>A wooden desk, mountain air, and ideas in progress. Step into my forest study to explore the work — or just say hello.</p>
+            <div class="door"><div class="doorway"><button class="door-leaf" data-action="enter" aria-label="Explore the forest study"><span>Explore the forest study</span><span aria-hidden="true">↗</span></button></div></div>
+            <div class="trail-caption"><span>INTERACTIVE · 3D</span><a href="classic.html">Plain reading view ↗</a></div>
+          </div>
+          <aside class="board" aria-label="Field guide">
+            <h3 class="board-sub board-dir">CHOOSE A TRAIL</h3>
+            <div class="board-directory board-dir" id="lobby-directory"></div>
+            <h3 class="board-sub" style="margin-top:22px">FROM THE FIELD NOTES</h3>
+            <ul class="board-news" id="lobby-news"></ul>
+          </aside>
         </div>
-        <div class="lobby-floor"></div>
+      </div>
+      <footer class="field-foot"><span>ROOTED IN DHAKA · DRAWN TO THE MOUNTAINS</span><span>Keep exploring. Stay curious.</span></footer>
     </section>
 
     <!-- Section chips: keyboard/mobile-friendly way into every panel -->
@@ -139,6 +119,7 @@
     <template id="tpl-about">
 <p class="p-lead">I’m <strong>Md. Mosharaf Hossain Apurbo</strong>, a Level-4 undergraduate studying Computer Science and Engineering at <strong>BUET</strong> in Dhaka, Bangladesh.</p>
 <p>My interests span Physical AI, machine learning, agentic AI workflows, and on-device / embedded machine learning. I enjoy connecting learning systems with the algorithms and hardware that make them practical.</p>
+<p>Beyond code, I’m a nature lover, especially drawn to mountains. This portfolio is my imagined basecamp: a place for curiosity, thoughtful work, and a little quiet.</p>
 <h3 class="p-sub">Education</h3><ul class="timeline">
 <li><b>B.Sc. in Computer Science and Engineering · Level-4</b><span>Bangladesh University of Engineering and Technology · Nov 2022–Present</span><span>Academic advisor: <a href="https://cse.buet.ac.bd/faculty/faculty_detail/atif" target="_blank" rel="noopener">Dr. Atif Hasan Rahman</a>, Associate Professor, CSE</span></li>
 <li><b>Higher Secondary Certificate · GPA 5.00/5.00</b><span>Notre Dame College, Dhaka · Jul 2019–Dec 2021</span></li></ul>
@@ -215,6 +196,7 @@
             el.hidden = false;
         }, 10000);
     </script>
-    <script type="module" src="js/main.js?v=7"></script>
+    <script type="module" src="js/main.js?v=8"></script>
 </body>
 </html>
+

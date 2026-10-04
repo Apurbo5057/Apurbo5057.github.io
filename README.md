@@ -4,7 +4,8 @@ Personal portfolio for **Md. Mosharaf Hossain Apurbo**, CSE undergraduate at BUE
 
 Live site: **https://apurbo5057.github.io/**
 
-A static 3D office with a lobby, seven panels, Dhaka clock, day/night lighting,
+An original mountain Basecamp landing and open-air forest study with seven
+research panels, a Dhaka clock, day/night lighting, and night fireflies,
 and a plain HTML portfolio at `classic.html`. No package installation or build
 is needed to run it. Three.js is version-pinned in `js/three.js`; fonts and
 Three.js load from CDNs. The plain page works without JavaScript, WebGL, or CDNs.
@@ -28,11 +29,14 @@ for a friendly wave and heart. Reduced-motion visitors get a still greeting.
 - `index.html`: profile, links, and seven content templates. Edit content here.
 - `classic.html`: generated mirror; regenerate after changing templates.
 - `js/config.js`: sections, markers, camera framing, visitor settings.
-- `js/room.js`: room geometry, education books, and award frames.
+- `js/room.js`: timber deck, education books, and award frames.
+- `js/landscape.js`: original procedural mountains, pines, ferns, and fireflies.
+- `assets/img/basecamp.svg`: original illustrated mountain landscape.
 - `js/character.js`: seated desk worker and subtle typing animation.
 - `js/textures.js`: canvas roadmap, monitor, calendar, and books.
 - `js/clock.js`: Dhaka clock and daylight settings.
-- `css/office.css`: office styles; `css/classic.css`: plain page styles.
+- `css/office.css`: structural styles; `css/basecamp.css`: nature design;
+  `css/classic.css`: plain page layout.
 - `assets/img/monogram.svg`: initials artwork; replace with your photo if desired.
 - `assets/cv/`: provided LaTeX CV and compiled PDF.
 - `scripts/`: plain-page generation and validation.

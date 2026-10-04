@@ -1,5 +1,5 @@
 // What's in the room and how the camera frames it. Edit this file to add, move or rename sections.
-import { THREE } from './three.js';
+import { THREE } from './three.js?v=8';
 
 
 // Tour order. anchor = marker position; target/dir/size = camera framing when focused.
@@ -30,8 +30,8 @@ const LABELS = {
     'contact':      { side: 'left',  desc: 'Email, GitHub, LinkedIn & CV' },
 };
 HOTSPOTS.forEach((h, i) => { h.index = i; h.kind = 'panel'; Object.assign(h, LABELS[h.id]); });
-export const DOOR = { id: 'door', label: '← Lobby', kind: 'exit', side: 'top', desc: 'Step back out to the entrance',
-               anchor: [-2.93, 2.35, 0.32] };
+export const DOOR = { id: 'door', label: '← Basecamp', kind: 'exit', side: 'top', desc: 'Step back out to the entrance',
+               anchor: [-2.93, 2.0, 0.32] };
 export const byId = Object.fromEntries(HOTSPOTS.map((h) => [h.id, h]));
 
 // Interior of the room: walls at x = ±3, back wall at z = back. It runs far toward +z (behind the

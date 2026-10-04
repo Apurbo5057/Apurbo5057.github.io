@@ -1,6 +1,6 @@
 // Everything with text or a pattern on it is drawn on a canvas at load time — no image assets.
-import { canvasTex, rng, setFit, wobble, sketchRect, sketchArrow, roundRect, star, TAU } from './util.js';
-import { MONTHS } from './clock.js?v=7';
+import { canvasTex, rng, setFit, wobble, sketchRect, sketchArrow, roundRect, star, TAU } from './util.js?v=8';
+import { MONTHS } from './clock.js?v=8';
 
 export function plankTexture() {
     return canvasTex(1024, 1024, (c, W, H) => {
@@ -135,7 +135,7 @@ export function awardTexture({ venue, year, badge, color, paper }) {
         c.strokeRect(30, 30, W - 60, H - 60);
         c.textAlign = 'center';
         star(c, W / 2, 80, 24, 10, color);
-        c.fillStyle = '#0f2a52';
+        c.fillStyle = '#173d30';
         setFit(c, venue, W - 90, 64, 700, 'Sora');
         c.fillText(venue, W / 2, 170);
         c.fillStyle = '#52657a';
@@ -275,8 +275,8 @@ export function signTexture() {
         c.fillStyle = '#163a6b';
         c.textAlign = 'center';
         c.textBaseline = 'middle';
-        setFit(c, '← LOBBY', W - 40, 38, 700, 'Sora');
-        c.fillText('← LOBBY', W / 2, H / 2 + 2);
+        setFit(c, '← BASECAMP', W - 40, 38, 700, 'Sora');
+        c.fillText('← BASECAMP', W / 2, H / 2 + 2);
     });
 }
 
@@ -287,7 +287,7 @@ export function skyTexture(phase) {
             day:   ['#7fbcef', '#d6ebfb', '#9fb3c9'],
             dawn:  ['#9fb7e3', '#fbd9c0', '#8f8aa3'],
             dusk:  ['#4f5f9f', '#f3a37b', '#5b4f6e'],
-            night: ['#0a1631', '#253c69', '#18233d'],
+            night: ['#071c19', '#47665b', '#223c32'],
         }[phase];
         const g = c.createLinearGradient(0, 0, 0, H);
         g.addColorStop(0, G[0]);
@@ -318,36 +318,13 @@ export function skyTexture(phase) {
             c.beginPath(); c.arc(150, 400, 54, 0, TAU); c.fill();
         }
 
-        // Stylised Dhaka city skyline
-        c.fillStyle = G[2];
-        c.beginPath();
-        c.moveTo(0, H);
-        c.quadraticCurveTo(250, 380, 512, 520);
-        c.lineTo(512, H);
-        c.fill();
-        const bld = [[0, 470, 70], [64, 430, 58], [118, 500, 64], [178, 450, 50], [226, 520, 80], [300, 470, 60], [356, 430, 70], [424, 490, 88]];
-        const dark = phase === 'night' ? '#141d33' : phase === 'day' ? '#8aa0b8' : '#4e4462';
-        for (const [x, y, w] of bld) {
-            c.fillStyle = dark;
-            c.fillRect(x, y, w, H - y);
-            if (phase !== 'day') {
-                for (let wy = y + 14; wy < H - 10; wy += 22) {
-                    for (let wx = x + 8; wx < x + w - 10; wx += 16) {
-                        if (r() < (phase === 'night' ? 0.45 : 0.2)) {
-                            c.fillStyle = '#ffd98a';
-                            c.fillRect(wx, wy, 7, 9);
-                        }
-                    }
-                }
-            }
-        }
     });
 }
 
 // Generated in the browser: no borrowed paper figures or video assets.
 export function monitorTexture() {
     return canvasTex(1280, 800, (c, W, H) => {
-        c.fillStyle = '#0f2a52'; c.fillRect(0, 0, W, H);
+        c.fillStyle = '#173d30'; c.fillRect(0, 0, W, H);
         c.fillStyle = '#6de0cd'; c.font = '600 30px Inter';
         c.fillText('BUET / RESEARCH NOTES', 80, 100);
         c.fillStyle = '#ffffff'; c.font = '700 80px Sora';

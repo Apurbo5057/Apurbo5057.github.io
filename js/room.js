@@ -1,64 +1,54 @@
 // The room and everything in it. Each hotspot object is a group registered under its section id.
-import { THREE } from './three.js';
-import { DOOR, ROOM, byId } from './config.js';
-import { std, rbox, add, rod, rng, TAU } from './util.js';
-import { buildDeskWorker } from './character.js?v=7';
+import { THREE } from './three.js?v=8';
+import { DOOR, ROOM, byId } from './config.js?v=8';
+import { std, rbox, add, rod, rng, TAU } from './util.js?v=8';
+import { buildLandscape } from './landscape.js?v=8';
+import { buildDeskWorker } from './character.js?v=8';
 import {
     plankTexture, whiteboardTexture, awardTexture, stickyTexture, spineTexture, envelopeTexture,
     keyboardTexture, signTexture, monitorTexture,
-} from './textures.js?v=7';
+} from './textures.js?v=8';
 
 export function buildRoom({ scene, world, register, entries }) {
     // Materials and lights the time of day changes; scene.js drives them.
     const lights = { mood: [] };
     let deskWorker;
-    /* ---------- room shell ---------- */
-    // A closed box that runs well past the camera, so the view is filled with room at any aspect ratio.
+    const landscape = buildLandscape(world);
+    const skyMat = landscape.skyMat;
+    /* ---------- open-air timber deck ---------- */
     {
         const planks = plankTexture();
         planks.wrapS = planks.wrapT = THREE.RepeatWrapping;
         planks.repeat.set(1, ROOM.depth / 6);
-        const zMid = (ROOM.back + ROOM.front) / 2;
-        const floor = add(world, new THREE.PlaneGeometry(6, ROOM.depth), std(0xffffff, { map: planks, roughness: 0.7 }),
-            [0, 0, zMid], { cast: false });
+        const floor = add(world, new THREE.PlaneGeometry(6, ROOM.depth), std(0xd0b38a, { map: planks, roughness: .9 }), [0, 0, 2], { cast: false });
         floor.rotation.x = -Math.PI / 2;
-        // Unlit, or the hemisphere light would tint it with the floor's bounce colour.
+        const timber = std(0x73563b);
         lights.ceiling = new THREE.MeshBasicMaterial({ color: 0xe9eef5 });
-        const ceiling = add(world, new THREE.PlaneGeometry(6, ROOM.depth), lights.ceiling,
-            [0, ROOM.height, zMid], { cast: false, receive: false });
-        ceiling.rotation.x = Math.PI / 2;
-
-        const back = std(0xeef3f9), sideWall = std(0xe2e9f2);
-        add(world, new THREE.BoxGeometry(6.4, ROOM.height, 0.2), back, [0, ROOM.height / 2, ROOM.back - 0.1]);
-        add(world, new THREE.BoxGeometry(0.2, ROOM.height, ROOM.depth), sideWall, [-3.1, ROOM.height / 2, zMid]);
-        // The sun shines in over the right wall, so it must not cast a shadow across the room.
-        // It also faces away from the sun, so it glows a little to match the left wall.
-        const rightWall = lights.rightWall = std(0xe2e9f2, { emissive: 0xe2e9f2, emissiveIntensity: 0.3 });
-        add(world, new THREE.BoxGeometry(0.2, ROOM.height, ROOM.depth), rightWall, [3.1, ROOM.height / 2, zMid], { cast: false });
-        const trim = std(0xfafbfc);
-        add(world, new THREE.BoxGeometry(6.0, 0.1, 0.03), trim, [0, 0.05, ROOM.back + 0.015], { cast: false });
-        for (const x of [-2.985, 2.985]) add(world, new THREE.BoxGeometry(0.03, 0.1, ROOM.depth), trim, [x, 0.05, zMid], { cast: false });
-
-        add(world, new THREE.CylinderGeometry(1.2, 1.2, 0.015, 64), std(0xc3d3e8), [0.45, 0.0075, -1.4], { cast: false });
-        add(world, new THREE.CylinderGeometry(0.98, 0.98, 0.017, 64), std(0xdae5f2), [0.45, 0.0085, -1.4], { cast: false });
-
-        // recessed light panels
-        const glow = lights.panels = new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false });
-        for (const [x, z] of [[-1.4, -1.6], [1.4, -1.6], [-1.4, 1.2], [1.4, 1.2]]) {
-            const p = add(world, new THREE.PlaneGeometry(1.3, 0.28), glow, [x, ROOM.height - 0.004, z], { cast: false, receive: false });
-            p.rotation.x = Math.PI / 2;
+        lights.panels = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        lights.rightWall = std(0x73563b, { emissive: 0x73563b });
+        for (const x of [-3, 3]) {
+            for (const z of [-3, 0, 3, 6]) add(world, rbox(.09, .9, .09, .015), timber, [x, .45, z]);
+            add(world, rbox(.12, .09, 10, .01), timber, [x, .88, 2]);
         }
+        add(world, rbox(6, .09, .12, .01), timber, [0, .88, -3.1]);
+        // Freestanding cedar supports for the research board and collected milestones.
+        for (const z of [-2.6, -.2]) add(world, rbox(.09, 2.5, .09, .01), timber, [-3.06, 1.25, z]);
+        add(world, rbox(.09, .09, 2.5, .01), timber, [-3.06, 2.47, -1.4]);
+        add(world, rbox(2.7, .08, .08, .01), timber, [.2, 2.75, -3.12]);
+        for (const x of [-1.2, 1.5]) add(world, rbox(.08, 2.8, .08, .01), timber, [x, 1.4, -3.12]);
+        add(world, new THREE.CylinderGeometry(1.2, 1.2, .015, 64), std(0x78805c), [.45, .0075, -1.4], { cast:false });
+        add(world, new THREE.CylinderGeometry(.98, .98, .017, 64), std(0x9b9a70), [.45, .0085, -1.4], { cast:false });
     }
 
     /* ---------- desk + decor ---------- */
     {
-        const wood = std(0xd6b27f, { roughness: 0.6 }), navy = std(0x163a6b, { roughness: 0.6 });
+        const wood = std(0xd6b27f, { roughness: 0.6 }), navy = std(0x274739, { roughness: 0.6 });
         add(world, rbox(2.8, 0.06, 1.0, 0.02), wood, [0.55, 0.75, -2.5]);
         add(world, rbox(0.05, 0.72, 0.92, 0.01), navy, [-0.8, 0.36, -2.5]);
         add(world, rbox(0.05, 0.72, 0.92, 0.01), navy, [1.9, 0.36, -2.5]);
         add(world, rbox(2.6, 0.34, 0.03, 0.01), navy, [0.55, 0.5, -2.92]);
         // drawer cabinet
-        const cab = std(0xf3f5f8);
+        const cab = std(0xdcd4b8);
         add(world, rbox(0.46, 0.62, 0.8, 0.015), cab, [1.58, 0.33, -2.5]);
         for (const y of [0.48, 0.2]) add(world, rbox(0.16, 0.025, 0.02, 0.008), navy, [1.58, y, -2.095]);
 
@@ -66,7 +56,7 @@ export function buildRoom({ scene, world, register, entries }) {
         const kb = std(0xffffff, { map: keyboardTexture(), roughness: 0.6 });
         const kbSide = std(0xd7dee7);
         add(world, new THREE.BoxGeometry(0.62, 0.022, 0.2), [kbSide, kbSide, kb, kbSide, kbSide, kbSide], [0.45, 0.791, -2.2]);
-        add(world, new THREE.BoxGeometry(0.28, 0.004, 0.22), std(0x1f4e8c), [0.98, 0.782, -2.19], { cast: false });
+        add(world, new THREE.BoxGeometry(0.28, 0.004, 0.22), std(0x345541), [0.98, 0.782, -2.19], { cast: false });
         add(world, rbox(0.065, 0.03, 0.105, 0.014), std(0xffffff, { roughness: 0.4 }), [0.98, 0.797, -2.19]);
 
         // mug
@@ -83,22 +73,22 @@ export function buildRoom({ scene, world, register, entries }) {
         // pen holder
         const pens = new THREE.Group();
         pens.position.set(-0.42, 0.78, -2.84);
-        add(pens, new THREE.CylinderGeometry(0.04, 0.04, 0.1, 20), std(0x1f4e8c), [0, 0.05, 0]);
-        [[0x0f2a52, 0.3, 0.2], [0xe2574c, -0.25, 0.1], [0xe8b931, 0.05, -0.3]].forEach(([col, rx, rz], i) => {
+        add(pens, new THREE.CylinderGeometry(0.04, 0.04, 0.1, 20), std(0x345541), [0, 0.05, 0]);
+        [[0x243d30, 0.3, 0.2], [0xe2574c, -0.25, 0.1], [0xe8b931, 0.05, -0.3]].forEach(([col, rx, rz], i) => {
             const p = add(pens, new THREE.CylinderGeometry(0.006, 0.006, 0.16, 8), std(col), [0.012 * (i - 1), 0.1, 0.01 * (i - 1)]);
             p.rotation.set(rx * 0.4, 0, rz * 0.4);
         });
         world.add(pens);
 
         // desk lamp (light turns on after sunset in Dhaka)
-        const lampMat = std(0x0f2a52, { roughness: 0.45 });
+        const lampMat = std(0x243d30, { roughness: 0.45 });
         const B = new THREE.Vector3(-0.62, 0.8, -2.82), E = new THREE.Vector3(-0.68, 1.22, -2.9), Hd = new THREE.Vector3(-0.46, 1.26, -2.62);
         add(world, new THREE.CylinderGeometry(0.075, 0.085, 0.025, 24), lampMat, [B.x, 0.7925, B.z]);
         rod(world, B, E, 0.011, lampMat);
         rod(world, E, Hd, 0.011, lampMat);
         const D = new THREE.Vector3(-0.3, 0.78, -2.35);
         const aim = new THREE.Vector3().subVectors(D, Hd).normalize();
-        const head = add(world, new THREE.ConeGeometry(0.075, 0.12, 24, 1, true), std(0x0f2a52, { side: THREE.DoubleSide }));
+        const head = add(world, new THREE.ConeGeometry(0.075, 0.12, 24, 1, true), std(0x243d30, { side: THREE.DoubleSide }));
         head.position.copy(Hd);
         head.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), aim);
         const bulbMat = new THREE.MeshStandardMaterial({ color: 0xfff1d0, emissive: 0xffc977, emissiveIntensity: 0.2 });
@@ -119,7 +109,7 @@ export function buildRoom({ scene, world, register, entries }) {
         };
         const strip = new THREE.MeshBasicMaterial({ color: 0xcfd6e2, toneMapped: false });
         add(world, new THREE.BoxGeometry(2.5, 0.025, 0.025), strip, [0.55, 0.8, -2.975], { cast: false, receive: false });
-        moodLight([0.5, 1.25, -2.8], 0x9a7dff, 2.4, 3.6, strip, 0xcfd6e2);
+        moodLight([0.5, 1.25, -2.8], 0xe6bf74, 1.8, 3.6, strip, 0xcfd6e2);
         const orb = new THREE.MeshBasicMaterial({ color: 0xf3efe6, toneMapped: false });
         add(world, new THREE.CylinderGeometry(0.05, 0.06, 0.03, 20), std(0x1c2b3a), [-2.55, 2.135, -2.77]);
         add(world, new THREE.SphereGeometry(0.11, 24, 18), orb, [-2.55, 2.25, -2.77], { cast: false, receive: false });
@@ -129,7 +119,7 @@ export function buildRoom({ scene, world, register, entries }) {
         const chair = new THREE.Group();
         chair.position.set(0.45, 0, -1.65);
         chair.rotation.y = Math.PI;
-        const seat = std(0x1f4e8c, { roughness: 0.7 }), dark = std(0x1c2b3a, { roughness: 0.5 }), chrome = std(0xb7c1cc, { roughness: 0.3, metalness: 0.5 });
+        const seat = std(0x345541, { roughness: 0.7 }), dark = std(0x1c2b3a, { roughness: 0.5 }), chrome = std(0xb7c1cc, { roughness: 0.3, metalness: 0.5 });
         for (let i = 0; i < 5; i++) {
             const a = (i / 5) * TAU;
             const leg = add(chair, rbox(0.035, 0.03, 0.3, 0.01), dark, [Math.sin(a) * 0.15, 0.07, Math.cos(a) * 0.15]);
@@ -164,24 +154,6 @@ export function buildRoom({ scene, world, register, entries }) {
         world.add(plant);
     }
 
-    /* ---------- window (tooltip: Dhaka time) ---------- */
-    const skyMat = new THREE.MeshBasicMaterial({ toneMapped: false });
-    {
-        const g = new THREE.Group();
-        g.position.set(2.3, 1.85, -2.99);
-        add(g, new THREE.PlaneGeometry(0.9, 1.1), skyMat, [0, 0, 0.005], { cast: false, receive: false });
-        const frame = std(0xffffff, { roughness: 0.5 });
-        add(g, rbox(1.02, 0.06, 0.06, 0.01), frame, [0, 0.58, 0.03]);
-        add(g, rbox(1.02, 0.06, 0.06, 0.01), frame, [0, -0.58, 0.03]);
-        add(g, rbox(0.06, 1.22, 0.06, 0.01), frame, [-0.48, 0, 0.03]);
-        add(g, rbox(0.06, 1.22, 0.06, 0.01), frame, [0.48, 0, 0.03]);
-        add(g, rbox(0.03, 1.1, 0.03, 0.005), frame, [0, 0, 0.02]);
-        add(g, rbox(0.9, 0.03, 0.03, 0.005), frame, [0, 0.12, 0.02]);
-        add(g, rbox(1.14, 0.04, 0.16, 0.01), frame, [0, -0.62, 0.07]);
-        g.userData.entry = { def: { id: 'window', kind: 'tooltip' }, group: g };
-        world.add(g);
-    }
-
     /* ---------- hotspot: monitor → Publications ---------- */
     {
         const g = new THREE.Group();
@@ -210,7 +182,7 @@ export function buildRoom({ scene, world, register, entries }) {
         for (const y of levels) add(g, rbox(1.2, 0.035, 0.42, 0.008), frame, [0, y, 0]);
         add(g, rbox(1.24, 0.04, 0.44, 0.008), frame, [0, 2.1, 0]);
 
-        const palette = [0x163a6b, 0x2a63ad, 0x4d84c9, 0xe8b931, 0xe2574c, 0x7fa8d8, 0xf3efe6, 0x3f845a];
+        const palette = [0x274739, 0x2a63ad, 0x4d84c9, 0xe8b931, 0xe2574c, 0x7fa8d8, 0xf3efe6, 0x3f845a];
         const r = rng(21);
         const labelled = {
             2: [['BUET CSE', '#163a6b'], ['HSC · NDC', '#2a63ad'], ['ALGORITHMS', '#c9971c'], ['ON-DEVICE AI', '#e2574c']],
@@ -239,7 +211,7 @@ export function buildRoom({ scene, world, register, entries }) {
             }
             if (li === 3) {
                 // globe
-                add(g, new THREE.CylinderGeometry(0.06, 0.07, 0.02, 20), std(0x163a6b), [0.38, base + 0.01, 0]);
+                add(g, new THREE.CylinderGeometry(0.06, 0.07, 0.02, 20), std(0x274739), [0.38, base + 0.01, 0]);
                 add(g, new THREE.CylinderGeometry(0.008, 0.008, 0.08, 8), std(0xb7c1cc, { metalness: 0.5 }), [0.38, base + 0.05, 0]);
                 const globe = add(g, new THREE.IcosahedronGeometry(0.12, 2), std(0x4d84c9, { flatShading: true }), [0.38, base + 0.2, 0]);
                 globe.rotation.z = 0.4;
@@ -259,7 +231,7 @@ export function buildRoom({ scene, world, register, entries }) {
         add(g, rbox(2.12, 1.22, 0.035, 0.012), std(0xc3ccd6, { roughness: 0.35, metalness: 0.3 }), [0, 0, 0]);
         add(g, new THREE.PlaneGeometry(2.04, 1.14), std(0xffffff, { map: whiteboardTexture(), roughness: 0.35 }), [0, 0, 0.019], { cast: false });
         add(g, rbox(0.7, 0.03, 0.07, 0.008), std(0xc3ccd6, { metalness: 0.3 }), [0, -0.63, 0.04]);
-        [[0x163a6b, -0.18], [0xe2574c, 0], [0x2a63ad, 0.15]].forEach(([col, x]) => {
+        [[0x274739, -0.18], [0xe2574c, 0], [0x2a63ad, 0.15]].forEach(([col, x]) => {
             const m = add(g, new THREE.CylinderGeometry(0.012, 0.012, 0.13, 10), std(col), [x, -0.605, 0.045]);
             m.rotation.z = Math.PI / 2;
         });
@@ -307,7 +279,7 @@ export function buildRoom({ scene, world, register, entries }) {
         const g = new THREE.Group();
         g.position.set(1.55, 0.78, -2.4);
         g.scale.setScalar(1.3);
-        const white = std(0xf6f7f9, { roughness: 0.45 }), coral = std(0xe2574c, { roughness: 0.5 }), navy = std(0x0f2a52, { roughness: 0.5 });
+        const white = std(0xf6f7f9, { roughness: 0.45 }), coral = std(0xe2574c, { roughness: 0.5 }), navy = std(0x243d30, { roughness: 0.5 });
         add(g, new THREE.CylinderGeometry(0.11, 0.13, 0.05, 32), navy, [0, 0.025, 0]);
         const yaw = new THREE.Group();
         yaw.position.y = 0.05;
@@ -340,7 +312,7 @@ export function buildRoom({ scene, world, register, entries }) {
         g.position.set(-0.47, 0.78, -2.36);
         g.rotation.y = 0.12;
         g.scale.setScalar(1.25);
-        const tray = std(0x1f4e8c, { roughness: 0.55 });
+        const tray = std(0x345541, { roughness: 0.55 });
         add(g, new THREE.BoxGeometry(0.36, 0.012, 0.27), tray, [0, 0.006, 0]);
         add(g, new THREE.BoxGeometry(0.36, 0.045, 0.01), tray, [0, 0.0225, 0.13]);
         add(g, new THREE.BoxGeometry(0.36, 0.06, 0.01), tray, [0, 0.03, -0.13]);
@@ -361,19 +333,12 @@ export function buildRoom({ scene, world, register, entries }) {
         const g = new THREE.Group();
         g.position.set(-2.99, 0, 0.32);
         g.rotation.y = Math.PI / 2;
-        const trim = std(0xffffff, { roughness: 0.5 });
-        add(g, rbox(0.06, 2.18, 0.05, 0.01), trim, [-0.48, 1.09, 0.02]);
-        add(g, rbox(0.06, 2.18, 0.05, 0.01), trim, [0.48, 1.09, 0.02]);
-        add(g, rbox(1.02, 0.06, 0.05, 0.01), trim, [0, 2.15, 0.02]);
-        add(g, new THREE.PlaneGeometry(0.9, 2.1), new THREE.MeshBasicMaterial({ color: 0xfdf1d3, toneMapped: false }), [0, 1.05, 0.004], { cast: false, receive: false });
+        const timber = std(0x73563b);
+        add(g, rbox(.12, 1.9, .12, .01), timber, [0, .95, 0]);
         const hinge = new THREE.Group();
-        hinge.position.set(-0.45, 0, 0.012);
         g.add(hinge);
-        const panelMat = std(0x1f4e8c, { roughness: 0.55 });
-        add(hinge, rbox(0.9, 2.08, 0.045, 0.01), panelMat, [0.45, 1.05, 0.022]);
-        add(hinge, rbox(0.62, 0.7, 0.012, 0.006), std(0x2a5c9e, { roughness: 0.55 }), [0.45, 0.55, 0.048]);
-        add(hinge, new THREE.SphereGeometry(0.035, 16, 12), std(0xe8b931, { metalness: 0.5, roughness: 0.3 }), [0.8, 1.0, 0.07]);
-        add(hinge, new THREE.PlaneGeometry(0.42, 0.145), std(0xffffff, { map: signTexture() }), [0.45, 1.5, 0.046], { cast: false });
+        add(hinge, rbox(1.1, .4, .09, .02), std(0x3a5940), [0, 1.72, .025]);
+        add(hinge, new THREE.PlaneGeometry(1.0, .34), std(0xffffff, { map: signTexture() }), [0, 1.72, .073], { cast:false });
         Object.assign(door, { hinge, open: 0 });
         const entry = { def: DOOR, group: g, glow: false };
         g.userData.entry = entry;
@@ -381,5 +346,5 @@ export function buildRoom({ scene, world, register, entries }) {
         world.add(g);
     }
 
-    return { skyMat, calendarPage, robot, door, lights, deskWorker };
+    return { skyMat, calendarPage, robot, door, lights, deskWorker, landscape };
 }

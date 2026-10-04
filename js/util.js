@@ -1,5 +1,5 @@
 // Small helpers for building meshes and drawing on canvas textures.
-import { THREE, RoundedBoxGeometry } from './three.js';
+import { THREE, RoundedBoxGeometry } from './three.js?v=8';
 
 export const TAU = Math.PI * 2;
 

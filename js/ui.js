@@ -1,6 +1,6 @@
 // 2D layer: chips, markers and the detail panel. Works even without WebGL.
-import { THREE } from './three.js';
-import { HOTSPOTS, DOOR, byId } from './config.js';
+import { THREE } from './three.js?v=8';
+import { HOTSPOTS, DOOR, byId } from './config.js?v=8';
 
 const $ = (s) => document.querySelector(s);
 
@@ -41,7 +41,7 @@ export const markers = [...HOTSPOTS, DOOR].map((h, i) => {
     el.dataset.kind = h.kind;
     el.dataset.side = h.side;
     el.style.setProperty('--i', i);
-    el.setAttribute('aria-label', h.kind === 'exit' ? 'Leave the office, back to the lobby' : `Open ${h.label}: ${h.desc}`);
+    el.setAttribute('aria-label', h.kind === 'exit' ? 'Return to Basecamp' : `Open ${h.label}: ${h.desc}`);
     // Panel markers carry their tour number, matching the numbered chips at the bottom.
     const num = h.kind === 'panel' ? `<span class="num">${h.index + 1}</span>` : '';
     el.innerHTML = `<span class="marker-dot"></span><span class="marker-label">${num}${h.label}<span class="marker-desc">${h.desc}</span></span>`;
