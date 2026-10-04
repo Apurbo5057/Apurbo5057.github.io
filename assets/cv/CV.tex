@@ -1,0 +1,122 @@
+\documentclass[10pt,a4paper]{article}
+% Compile with pdfLaTeX or XeLaTeX (e.g. on Overleaf).
+\usepackage[margin=1.7cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{hyperref}
+\definecolor{linkcolor}{RGB}{0,0,139}
+\hypersetup{colorlinks=true,linkcolor=linkcolor,urlcolor=linkcolor}
+\titleformat{\section}{\large\bfseries\scshape}{}{0pt}{}[\vspace{-6pt}\rule{\linewidth}{0.6pt}]
+\titlespacing*{\section}{0pt}{9pt}{5pt}
+\setlist{nosep,leftmargin=1.3em,topsep=2pt}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\newcommand{\me}{\underline{Md.\ Mosharaf Hossain Apurbo}}
+\newcommand{\gh}[1]{\,\href{#1}{\faGithub}}
+\newcommand{\entry}[4]{\textbf{#1} \hfill #2\\ \textit{#3} \hfill \textit{#4}\par}
+% keeps every entry on one page (never split across a page break)
+\newenvironment{cventry}{\par\noindent\begin{minipage}{\linewidth}}{\end{minipage}\par\vspace{5pt}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Md. Mosharaf Hossain Apurbo}\\[5pt]
+\faPhone\ +8801711127583 \quad
+\faEnvelope\ \href{mailto:mosharaf.apurbo57@gmail.com}{mosharaf.apurbo57@gmail.com} \quad
+\faLinkedin\ \href{https://www.linkedin.com/in/m-a-hossain-884aa52a0/}{moshraf-hossain-apurbo} \quad
+\faGithub\ \href{https://github.com/Roll-no-57}{Roll-no-57}
+\end{center}
+
+\section{Research Interests}
+Physical AI, machine learning, agentic AI workflows, and on-device / embedded machine learning.
+
+\section{Education}
+\begin{cventry}
+\entry{Bangladesh University of Engineering and Technology (BUET)}{Dhaka, Bangladesh}{B.Sc.\ in Computer Science and Engineering (Level-4)}{Nov 2022 -- Present}
+Advisor: \href{https://cse.buet.ac.bd/faculty/faculty_detail/atif}{Dr.\ Atif Hasan Rahman} (Associate Professor, Dept.\ of CSE, BUET)
+\begin{itemize}
+\item Relevant courses: Signals and Systems, Computer Architecture, Data Structures and Algorithms, Theory of Computation, Software Engineering, Database, Object-Oriented Programming.
+\end{itemize}
+\end{cventry}
+\begin{cventry}
+\entry{Notre Dame College}{Dhaka, Bangladesh}{Higher Secondary Certificate (HSC), GPA 5.00/5.00}{Jul 2019 -- Dec 2021}
+\end{cventry}
+
+\section{Research Experience}
+\begin{cventry}
+\entry{Generating Scale-Free Chordal Graphs}{Ongoing}{Undergraduate Thesis, BUET --- Supervisor: Dr.\ Md.\ Saidur Rahman (Professor, Dept.\ of CSE)}{Jun 2026 -- Present}
+\begin{itemize}
+\item Exactly characterised which degree distributions are achievable by chordal graphs of bounded clique number, and showed the same condition holds for $k$-degenerate, bounded-treewidth and bounded-pathwidth graphs.
+\item Designed a \textbf{linear-time generator} that outputs chordal graphs with a prescribed degree distribution (with a perfect elimination order as certificate); for power laws it attains the \textbf{optimal convergence rate} with no degree cut-off.
+\end{itemize}
+\end{cventry}
+\begin{cventry}
+\entry{SpatialNet: Power-efficient, Effortless Onboarding with Smart Glass}{Under review}{CSE-450 Capstone, BUET --- with \href{https://research.samsung.com/srbd}{Samsung R\&D Institute Bangladesh}}{Dec 2025 -- Sep 2026}
+\me, Niloy Das Robin, Nabiha Tahseen, Gourove Roy, Sayjad Rahman
+\begin{itemize}
+\item A \textbf{0.72M-parameter (1.5\,MB)} model that finds the wearer's hand, fingertip and pointed-at target from a single frame, running fully \textbf{on a Samsung WearOS-based smart glass} (60--80\,ms/frame).
+\item \textbf{82.6\% target IoU} and \textbf{99.2\% scene accuracy}; +34 pts IoU over vision-language models with 5,000$\times$ fewer parameters.
+\end{itemize}
+\end{cventry}
+\section{Publications}
+\newcommand{\badge}[1]{\colorbox{green!12}{\scriptsize\textcolor{green!45!black}{\textbf{#1}}}}
+\begin{enumerate}[leftmargin=1.6em,itemsep=4pt]
+\item \me, Md.\ Asif Ali, and Kazi Reyazul Hasan, \textbf{Multiple-Instance Contrastive Alignment for Pose-Based Sign Spotting}, Workshop on Sign Language Processing (WSLP) at EMNLP, 2026. \badge{Workshop} \textit{Accepted}
+\item Md.\ Asif Ali, \me, and Kazi Reyazul Hasan, \textbf{Metric-Learning Retrieval for Cross-Signer Isolated Sign Language Recognition}, Workshop on Sign Language Processing (WSLP) at EMNLP, 2026. \badge{Workshop} \textit{Accepted}
+\end{enumerate}
+
+\section{Selected Projects}
+\begin{cventry}
+\entry{Trip.AI --- AI Travel Planning Platform\gh{https://github.com/Roll-no-57/Trip.AI}}{Oct 2024}{Agentic AI application}{}
+\begin{itemize}
+\item Built \textbf{agentic, personalised itinerary generation} that plans trips around each user's preferences, with real-time weather updates.
+\item Implemented \textbf{RAG-based natural-language image search} during the BUET CSE Fest Hackathon 2024 (Best Documentation award).
+\item Added AI-generated travel blogs and vlogs with accompanying music.
+\end{itemize}
+\end{cventry}
+\begin{cventry}
+\entry{Mini-PC: 8-bit MIPS Processor (Logisim)\gh{https://github.com/Roll-no-57/Mini-PC}}{Oct 2024}{Computer architecture}{}
+\begin{itemize}
+\item Designed an 8-bit MIPS processor from scratch: control logic, ALU, memory access and I/O for a complete instruction cycle.
+\item Built a display module and created a \textbf{Snake game} that runs on the processor.
+\end{itemize}
+\end{cventry}
+\begin{cventry}
+\entry{C-to-Intel-8086 Compiler (C++17, ANTLR 4)\gh{https://github.com/Roll-no-57/C-Compiler}}{Jan 2025 -- Jun 2025}{Low-level systems programming}{}
+\begin{itemize}
+\item Full front end (lexer, semantic analysis, scoped symbol table) and 8086 back end with BP-relative stack frames, recursion and arrays; peephole optimiser.
+\end{itemize}
+\end{cventry}
+\begin{cventry}
+\entry{Quantum Machine Learning Benchmarking for Biomedical Data\gh{https://github.com/Roll-no-57/quantum-benchmarking}}{}{Scientific ML}{}
+\begin{itemize}
+\item Benchmarking framework for quantum feature encodings and ansatz models with SHAP/LASSO/PCA feature selection and convergence visualisations.
+\end{itemize}
+\end{cventry}
+
+\begin{cventry}
+\entry{BookSphere --- E-commerce Platform\gh{https://github.com/Roll-no-57/Project_BookSphere}}{Jan 2024 -- Feb 2024}{Full-stack web application}{}
+\begin{itemize}
+\item An Oracle-powered, Bootstrap-based e-commerce site replicating Rokomari.com's core features.
+\end{itemize}
+\end{cventry}
+
+\section{Honours}
+\begin{itemize}
+\item 2nd Runners-up, AI Proof of Concept Exhibition, Samsung R\&D Institute Bangladesh, Sep 2026.
+\item Best Documentation (AI/API), BUET CSE Fest Hackathon 2024.
+\end{itemize}
+
+\section{Skills}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\textbf{Programming} & C, C++, Python, Java, SQL \\
+\textbf{ML} & PyTorch; on-device model design, quantisation and compression for resource-constrained hardware; contrastive and metric learning \\
+\textbf{Systems} & Embedded C, computer architecture, compilers; Git, Docker \\
+\textbf{Other} & Next.js, Spring Boot; Oracle, MySQL, MongoDB \\
+\end{tabularx}
+\end{document}

@@ -1,0 +1,13 @@
+html, body.classic { height: auto; overflow: auto; overscroll-behavior: auto; }
+body.classic { max-width: 960px; margin: auto; padding: 48px 24px; background: var(--bg); }
+.classic-header h1 { margin-top: 24px; font-size: clamp(28px, 5vw, 44px); }
+.classic-nav { display: flex; flex-wrap: wrap; gap: 12px 24px; margin: 32px 0; }
+.classic main section { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 32px; margin: 24px 0; scroll-margin-top: 24px; }
+.classic section > h2 { border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 24px; }
+.classic footer { color: var(--ink-soft); text-align: center; padding: 24px 0; }
+@media (max-width: 600px) {
+  body.classic { padding: 24px 16px; }
+  .classic main section { padding: 24px 18px; }
+  .classic .contact-list li { flex-wrap: wrap; }
+  .classic .pub { grid-template-columns: 1fr; }
+}

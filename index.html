@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Md. Mosharaf Hossain Apurbo — CSE undergraduate at BUET researching Physical AI, efficient on-device machine learning, sign language understanding, and graph algorithms.">
+    <title>Apurbo | Research Office</title>
+    <!-- Link previews (LinkedIn, Slack, X, KakaoTalk …) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://apurbo5057.github.io/">
+    <meta property="og:title" content="Apurbo — walk into my research office">
+    <meta property="og:description" content="Step into Apurbo’s office: research at BUET, on-device AI, sign language papers, algorithms, and engineering projects.">
+    <meta property="og:image" content="https://apurbo5057.github.io/assets/img/office-preview.jpg">
+    <meta property="og:image:width" content="1920">
+    <meta property="og:image:height" content="889">
+    <link rel="canonical" href="https://apurbo5057.github.io/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231f4e8c%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EMA%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/office.css?v=5">
+</head>
+<body>
+
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div id="markers" aria-label="Objects in the office"></div>
+    <div id="tooltip" role="status" aria-live="polite"></div>
+
+    <!-- Top bar -->
+    <nav class="topbar">
+        <div class="top-left">
+            <a class="brand" href="#" data-action="home">Apurbo <span>· Research Office</span></a>
+            <!-- Live Dhaka time; js/clock.js fills it in and uses it to pick the day or night theme. -->
+            <button class="clock" id="clock" title="Dhaka time — click to switch between day and night">
+                <span class="clock-icon" aria-hidden="true"></span>
+                <span class="clock-place">Dhaka, Bangladesh</span>
+                <span class="clock-time">--:-- BST</span>
+            </button>
+        </div>
+        <div class="top-links">
+            <button class="only-inside" data-action="exit">← Lobby</button>
+            <a class="hide-sm" href="assets/cv/Apurbo-CV.pdf" target="_blank" rel="noopener">CV</a>
+            <a class="hide-sm" href="classic.html">Classic site ↗</a>
+        </div>
+    </nav>
+
+    <!-- Lobby: the wall outside the office. Everything here is plain HTML, readable without 3D. -->
+    <section class="lobby" id="lobby" aria-label="Entrance">
+        <div class="lobby-row">
+            <header class="plate">
+                <p class="eyebrow">Research Office</p>
+                <div class="plate-head">
+                    <img src="assets/img/monogram.svg" alt="MA monogram for Md. Mosharaf Hossain Apurbo">
+                    <div>
+                        <h1>Apurbo</h1><p class="full-name">Md. Mosharaf Hossain Apurbo</p>
+                        <p class="plate-role">CSE Undergraduate · BUET</p>
+                    </div>
+                </div>
+                <p class="plate-affil"><a href="https://cse.buet.ac.bd/" target="_blank" rel="noopener">Computer Science &amp; Engineering</a><br>Bangladesh University of Engineering and Technology</p>
+                <p class="plate-tagline">I build <strong>AI that works beyond the screen</strong> — from efficient wearable vision to agentic workflows, with a foundation in algorithms and systems.</p>
+                <ul class="plate-stats">
+                    <li><b>2</b><span>Accepted papers</span></li>
+                    <li><b>5</b><span>Selected projects</span></li>
+                    <li><b>0.72M</b><span>SpatialNet parameters</span></li>
+                </ul>
+                <div class="plate-links">
+                    <a class="btn btn-primary" href="mailto:mosharaf.apurbo57@gmail.com">Email</a>
+                    <a class="btn btn-ghost" href="assets/cv/Apurbo-CV.pdf" target="_blank" rel="noopener">CV</a>
+                    <a class="btn btn-ghost" href="https://github.com/Apurbo5057" target="_blank" rel="noopener">GitHub</a>
+                    <a class="btn btn-ghost" href="https://www.linkedin.com/in/m-a-hossain-884aa52a0/" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
+                <p class="only-sm">Prefer a plain page? <a href="classic.html">Classic site ↗</a></p>
+                <p class="visitors" id="visitors" hidden><span class="dot"></span>You are visitor <b></b> — thanks for stopping by.</p>
+            </header>
+
+            <div class="door">
+                <!-- The doorway is a hole in the wall: the 3D office shows through once the leaf swings open. -->
+                <div class="doorway">
+                    <button class="door-leaf" data-action="enter" aria-label="Open the door and enter the office">
+                        <span class="door-sign"><b>Apurbo</b><small>Come in — it’s open</small></span>
+                        <span class="door-inset"></span>
+                        <span class="door-knob"></span>
+                    </button>
+                </div>
+                <button class="door-cta" data-action="enter" tabindex="-1" aria-hidden="true">Open the door <span>→</span></button>
+            </div>
+
+            <aside class="board" aria-label="Notice board">
+                <p class="eyebrow">Notice board</p>
+                <div class="note">
+                    <p class="phd-badge"><span class="dot"></span>Research &amp; engineering</p>
+                    <h2>Small models. Real-world impact.</h2>
+                    <p>Exploring Physical AI, on-device learning, and agentic systems. Get in touch:
+                    <a href="mailto:mosharaf.apurbo57@gmail.com">mosharaf.apurbo57@gmail.com</a></p>
+                </div>
+                <h3 class="board-sub">Latest news</h3>
+                <ul class="board-news" id="lobby-news"></ul>
+                <h3 class="board-sub board-dir">Inside the office</h3>
+                <div class="board-directory board-dir" id="lobby-directory"></div>
+            </aside>
+        </div>
+        <div class="lobby-floor"></div>
+    </section>
+
+    <!-- Section chips: keyboard/mobile-friendly way into every panel -->
+    <p class="hint" id="hint">Click a numbered object to open it · drag to look around</p>
+    <nav class="chips" id="chips" aria-label="Sections">
+        <button class="chip-tour" data-action="tour">Tour →</button>
+    </nav>
+
+    <!-- Detail panel -->
+    <aside class="panel" id="panel" aria-hidden="true" aria-labelledby="panel-title">
+        <div class="panel-head">
+            <div>
+                <p class="panel-eyebrow" id="panel-eyebrow"></p>
+                <h2 class="panel-title" id="panel-title" tabindex="-1"></h2>
+            </div>
+            <button class="panel-close" data-action="close" aria-label="Close panel">×</button>
+        </div>
+        <div class="panel-body" id="panel-body"></div>
+        <div class="panel-foot">
+            <button class="foot-btn" data-action="prev" id="foot-prev"></button>
+            <span class="foot-count" id="foot-count"></span>
+            <button class="foot-btn next" data-action="next" id="foot-next"></button>
+        </div>
+    </aside>
+
+    <p class="scene-error" id="scene-error" role="alert" hidden></p>
+
+    <noscript>
+        <div class="noscript">Explore all my work on the <a href="classic.html">plain portfolio</a> instead.</div>
+    </noscript>
+
+    <!-- Content templates: shared by the office and generated classic.html. -->
+
+    <template id="tpl-about">
+<p class="p-lead">I’m <strong>Md. Mosharaf Hossain Apurbo</strong>, a Level-4 undergraduate studying Computer Science and Engineering at <strong>BUET</strong> in Dhaka, Bangladesh.</p>
+<p>My interests span Physical AI, machine learning, agentic AI workflows, and on-device / embedded machine learning. I enjoy connecting learning systems with the algorithms and hardware that make them practical.</p>
+<h3 class="p-sub">Education</h3><ul class="timeline">
+<li><b>B.Sc. in Computer Science and Engineering · Level-4</b><span>Bangladesh University of Engineering and Technology · Nov 2022–Present</span><span>Academic advisor: <a href="https://cse.buet.ac.bd/faculty/faculty_detail/atif" target="_blank" rel="noopener">Dr. Atif Hasan Rahman</a>, Associate Professor, CSE</span></li>
+<li><b>Higher Secondary Certificate · GPA 5.00/5.00</b><span>Notre Dame College, Dhaka · Jul 2019–Dec 2021</span></li></ul>
+<h3 class="p-sub">Coursework</h3><p>Signals and Systems, Computer Architecture, Data Structures and Algorithms, Theory of Computation, Software Engineering, Database, and Object-Oriented Programming.</p>
+<h3 class="p-sub">Skills</h3><ul class="plain-list">
+<li><b>Programming</b><span>C, C++, Python, Java, SQL</span></li>
+<li><b>Machine learning</b><span>PyTorch, on-device model design, quantisation, compression, contrastive learning, metric learning</span></li>
+<li><b>Systems</b><span>Embedded C, computer architecture, compilers, Git, Docker</span></li>
+<li><b>Web &amp; databases</b><span>Next.js, Spring Boot, Oracle, MySQL, MongoDB</span></li></ul>
+    </template>
+
+    <template id="tpl-research">
+<div class="ri"><span class="ri-num">01</span><h3>Efficient AI in the physical world</h3><p>Physical AI and on-device machine learning: compact models that perceive and run on resource-constrained hardware.</p></div>
+<div class="pub-featured"><h3>SpatialNet: Power-efficient, Effortless Onboarding with Smart Glass</h3><p class="pub-venue"><span class="chip chip-preprint">Under review</span> CSE-450 Capstone · Dec 2025–Sep 2026</p>
+<p>Developed at BUET with <a href="https://research.samsung.com/srbd" target="_blank" rel="noopener">Samsung R&amp;D Institute Bangladesh</a>. A <strong>0.72M-parameter, 1.5 MB model</strong> finds the wearer’s hand, fingertip, and pointed-at target from a single frame, fully on a Samsung WearOS-based smart glass at <strong>60–80 ms/frame</strong>.</p>
+<p><strong>82.6% target IoU</strong> and <strong>99.2% scene accuracy</strong>; 34 percentage points higher IoU than vision-language models with 5,000× fewer parameters.</p>
+<p class="pub-authors">Md. Mosharaf Hossain Apurbo, Niloy Das Robin, Nabiha Tahseen, Gourove Roy, Sayjad Rahman</p></div>
+<div class="ri"><span class="ri-num">02</span><h3>Learning representations of sign language</h3><p>Contrastive alignment and metric-learning retrieval for pose-based sign spotting and cross-signer recognition. See the two accepted workshop papers on the monitor.</p></div>
+<div class="ri"><span class="ri-num">03</span><h3>Graph algorithms &amp; generative structure</h3><p><strong>Generating Scale-Free Chordal Graphs</strong> — ongoing undergraduate thesis at BUET, Jun 2026–Present, supervised by <strong>Dr. Md. Saidur Rahman</strong>, Professor, CSE.</p>
+<p>Characterised the degree distributions achievable by chordal graphs of bounded clique number, with the same condition for k-degenerate graphs and graphs of bounded treewidth and pathwidth.</p>
+<p>Designed a <strong>linear-time generator</strong> for a prescribed degree distribution, producing a perfect elimination order as a certificate. For power laws, it achieves the optimal convergence rate without a degree cut-off.</p></div>
+<p class="p-note">I’m also interested in agentic AI workflows, explored through Trip.AI.</p>
+    </template>
+
+    <template id="tpl-publications">
+<p class="p-lead">Two accepted papers on learning from sign language.</p>
+<article class="pub"><div class="pub-thumb pub-thumb-empty" aria-hidden="true">01</div><div><h3>Multiple-Instance Contrastive Alignment for Pose-Based Sign Spotting</h3><p class="pub-authors"><b>Md. Mosharaf Hossain Apurbo</b>, Md. Asif Ali, Kazi Reyazul Hasan</p><p class="pub-venue"><span class="chip chip-venue">WSLP · EMNLP 2026</span><span class="chip chip-highlight">Accepted</span></p><p>Workshop on Sign Language Processing.</p></div></article>
+<article class="pub"><div class="pub-thumb pub-thumb-empty" aria-hidden="true">02</div><div><h3>Metric-Learning Retrieval for Cross-Signer Isolated Sign Language Recognition</h3><p class="pub-authors">Md. Asif Ali, <b>Md. Mosharaf Hossain Apurbo</b>, Kazi Reyazul Hasan</p><p class="pub-venue"><span class="chip chip-venue">WSLP · EMNLP 2026</span><span class="chip chip-highlight">Accepted</span></p><p>Workshop on Sign Language Processing.</p></div></article>
+<h3 class="p-sub">Under review</h3><p><strong>SpatialNet: Power-efficient, Effortless Onboarding with Smart Glass</strong> — on-device vision for smart glasses. Details in Research.</p>
+    </template>
+
+    <template id="tpl-recognition">
+<div class="stats"><div><b>2</b><span>Accepted workshop papers</span></div><div><b>2</b><span>Engineering awards</span></div></div>
+<h3 class="p-sub">Honours</h3><ul class="recog">
+<li><span class="chip chip-highlight">2nd Runners-up</span><b>AI Proof of Concept Exhibition</b><span class="recog-sub">Samsung R&amp;D Institute Bangladesh · Sep 2026</span></li>
+<li><span class="chip chip-spotlight">Best Documentation</span><b>BUET CSE Fest Hackathon</b><span class="recog-sub">AI/API · 2024 · Trip.AI</span></li></ul>
+    </template>
+
+    <template id="tpl-news">
+<div class="news"><span class="news-date">2026</span><h3>Two papers accepted at WSLP, EMNLP 2026</h3><p>Work on pose-based sign spotting and cross-signer sign language recognition accepted at the Workshop on Sign Language Processing.</p></div>
+<div class="news"><span class="news-date">2026.09</span><h3>Samsung AI exhibition: 2nd Runners-up</h3><p>Recognition at the AI Proof of Concept Exhibition at Samsung R&amp;D Institute Bangladesh.</p></div>
+<div class="news"><span class="news-date">2026.06</span><h3>Undergraduate thesis on chordal graphs</h3><p>Ongoing work on generating scale-free chordal graphs under Dr. Md. Saidur Rahman at BUET.</p></div>
+<div class="news"><span class="news-date">2024.10</span><h3>Best Documentation at BUET CSE Fest</h3><p>Trip.AI received the Best Documentation award in the AI/API category at the 2024 hackathon.</p></div>
+    </template>
+
+    <template id="tpl-projects">
+<p class="p-lead">From agentic applications to compilers and custom processors.</p>
+<article class="project"><p class="eyebrow">Agentic AI · Oct 2024</p><h3>Trip.AI</h3><p>A personalised AI travel planning platform with preference-aware itineraries, real-time weather, RAG-based natural-language image search, and AI-generated blogs and vlogs with music.</p><a class="btn btn-ghost" href="https://github.com/Roll-no-57/Trip.AI" target="_blank" rel="noopener">View repository ↗</a></article>
+<article class="project"><p class="eyebrow">Computer architecture · Oct 2024</p><h3>Mini-PC: 8-bit MIPS Processor</h3><p>A processor built from scratch in Logisim: control logic, ALU, memory access, I/O, and a complete instruction cycle. Includes a display module and a Snake game running on the processor.</p><a class="btn btn-ghost" href="https://github.com/Roll-no-57/Mini-PC" target="_blank" rel="noopener">View repository ↗</a></article>
+<article class="project"><p class="eyebrow">Systems · Jan–Jun 2025</p><h3>C-to-Intel-8086 Compiler</h3><p>C++17 and ANTLR 4 front end with lexer, semantic analysis, and scoped symbol tables. The 8086 back end supports BP-relative stack frames, recursion, arrays, and peephole optimisation.</p><a class="btn btn-ghost" href="https://github.com/Roll-no-57/C-Compiler" target="_blank" rel="noopener">View repository ↗</a></article>
+<article class="project"><p class="eyebrow">Scientific machine learning</p><h3>Quantum ML Benchmarking for Biomedical Data</h3><p>A framework for benchmarking quantum feature encodings and ansatz models with SHAP, LASSO, and PCA feature selection, plus convergence visualisations.</p><a class="btn btn-ghost" href="https://github.com/Roll-no-57/quantum-benchmarking" target="_blank" rel="noopener">View repository ↗</a></article>
+<article class="project"><p class="eyebrow">Full-stack · Jan–Feb 2024</p><h3>BookSphere</h3><p>An Oracle-powered, Bootstrap-based e-commerce platform implementing core features of Rokomari.com.</p><a class="btn btn-ghost" href="https://github.com/Roll-no-57/Project_BookSphere" target="_blank" rel="noopener">View repository ↗</a></article>
+    </template>
+
+    <template id="tpl-contact">
+<p class="p-lead">Let’s talk about research, engineering, or a project we could build together.</p><ul class="contact-list">
+<li><span>Email</span><a href="mailto:mosharaf.apurbo57@gmail.com">mosharaf.apurbo57@gmail.com</a></li>
+<li><span>GitHub</span><a href="https://github.com/Apurbo5057" target="_blank" rel="noopener">Apurbo5057</a></li>
+<li><span>Projects</span><a href="https://github.com/Roll-no-57" target="_blank" rel="noopener">Roll-no-57</a></li>
+<li><span>LinkedIn</span><a href="https://www.linkedin.com/in/m-a-hossain-884aa52a0/" target="_blank" rel="noopener">Md. Mosharaf Hossain Apurbo</a></li>
+<li><span>Phone</span><a href="tel:+8801711127583">+880 1711 127583</a></li>
+<li><span>Based in</span>Dhaka, Bangladesh</li></ul>
+<div class="contact-actions"><a class="btn btn-primary" href="mailto:mosharaf.apurbo57@gmail.com">Email me</a><a class="btn btn-ghost" href="assets/cv/Apurbo-CV.pdf" target="_blank" rel="noopener">Download CV</a></div>
+    </template>
+
+    <script>
+        // If the 3D module never starts (very old browser, blocked CDN), say so instead of showing an empty page.
+        window.addEventListener('error', function (e) { window.__officeError = window.__officeError || e.message; });
+        setTimeout(function () {
+            if (document.querySelector('#scene.ready') || document.body.classList.contains('no-webgl')) return;
+            var el = document.getElementById('scene-error');
+            el.innerHTML = 'The 3D office couldn\u2019t load in this browser. Please visit the <a href="classic.html">plain portfolio</a>.' +
+                (window.__officeError ? '<small>' + String(window.__officeError).replace(/</g, '&lt;') + '</small>' : '');
+            el.hidden = false;
+        }, 10000);
+    </script>
+    <script type="module" src="js/main.js?v=5"></script>
+</body>
+</html>

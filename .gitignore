@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+_site/
+assets/cv/*.aux
+assets/cv/*.log
+assets/cv/*.out
+assets/cv/*.synctex.gz
