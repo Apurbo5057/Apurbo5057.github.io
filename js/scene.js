@@ -4,7 +4,7 @@ import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from '.
 import { UP, setMaxAnisotropy } from './util.js';
 import { dhakaNow, onDaylight } from './clock.js';
 import { skyTexture, calendarTexture } from './textures.js';
-import { buildRoom } from './room.js';
+import { buildRoom } from './room.js?v=6';
 import { state, view, markers, measureLabels, openPanel, closePanel, showSceneError, canvas, panel, tooltip } from './ui.js';
 import { exitOffice } from './lobby.js';
 

@@ -2,7 +2,7 @@
 import { byId } from './config.js';
 import { showSceneError } from './ui.js';
 import { enterOffice } from './lobby.js';
-import { initScene } from './scene.js';
+import { initScene } from './scene.js?v=6';
 import './visitors.js';
 
 // Deep links (#publications, #office, …) skip the lobby and land inside.
