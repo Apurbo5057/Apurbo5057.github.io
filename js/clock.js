@@ -1,6 +1,6 @@
 // Dhaka clock. It drives the clock badge, the page theme (day / night) and, in 3D, the window sky
 // and the lamps. Preview another time with ?hour=22, or click the clock badge to flip day and night.
-import { params } from './config.js?v=8';
+import { params } from './config.js?v=13';
 
 export const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 

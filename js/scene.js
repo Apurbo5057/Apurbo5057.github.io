@@ -1,12 +1,12 @@
 // Renderer, lights, pointer interaction, camera and the frame loop.
-import { THREE } from './three.js?v=8';
-import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from './config.js?v=8';
-import { UP, setMaxAnisotropy } from './util.js?v=8';
-import { dhakaNow, onDaylight } from './clock.js?v=8';
-import { skyTexture, calendarTexture } from './textures.js?v=8';
-import { buildRoom } from './room.js?v=8';
-import { state, view, markers, measureLabels, openPanel, closePanel, showSceneError, canvas, panel, tooltip } from './ui.js?v=8';
-import { exitOffice } from './lobby.js?v=8';
+import { THREE } from './three.js?v=13';
+import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from './config.js?v=13';
+import { UP, setMaxAnisotropy } from './util.js?v=13';
+import { dhakaNow, onDaylight } from './clock.js?v=13';
+import { skyTexture, calendarTexture } from './textures.js?v=13';
+import { buildRoom } from './room.js?v=13';
+import { state, view, markers, measureLabels, openPanel, closePanel, showSceneError, canvas, panel, tooltip } from './ui.js?v=13';
+import { exitOffice } from './lobby.js?v=13';
 
 async function fontsReady() {
     if (!document.fonts) return;
@@ -62,7 +62,7 @@ export async function initScene() {
     const greeting = document.getElementById('greeting');
     let greetingTimer;
     function greetWorker() {
-        deskWorker.greet(clock.elapsedTime);
+        deskWorker.greet(clock.getElapsedTime());
         greeting.hidden = false;
         clearTimeout(greetingTimer);
         greetingTimer = setTimeout(() => { greeting.hidden = true; }, 3000);

@@ -1,13 +1,13 @@
 // The room and everything in it. Each hotspot object is a group registered under its section id.
-import { THREE } from './three.js?v=8';
-import { DOOR, ROOM, byId } from './config.js?v=8';
-import { std, rbox, add, rod, rng, TAU } from './util.js?v=8';
-import { buildLandscape } from './landscape.js?v=8';
-import { buildDeskWorker } from './character.js?v=8';
+import { THREE } from './three.js?v=13';
+import { DOOR, ROOM, byId } from './config.js?v=13';
+import { std, rbox, add, rod, rng, TAU } from './util.js?v=13';
+import { buildLandscape } from './landscape.js?v=13';
+import { buildDeskWorker } from './character.js?v=13';
 import {
     plankTexture, whiteboardTexture, awardTexture, stickyTexture, spineTexture, envelopeTexture,
     keyboardTexture, signTexture, monitorTexture,
-} from './textures.js?v=8';
+} from './textures.js?v=13';
 
 export function buildRoom({ scene, world, register, entries }) {
     // Materials and lights the time of day changes; scene.js drives them.

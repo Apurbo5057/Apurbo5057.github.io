@@ -1,6 +1,6 @@
 // A compact, procedural desk worker. Local +z faces the keyboard.
-import { THREE } from './three.js?v=8';
-import { std, rbox, add, rod } from './util.js?v=8';
+import { THREE } from './three.js?v=13';
+import { std, rbox, add, rod } from './util.js?v=13';
 
 export function buildDeskWorker(chair) {
     const person = new THREE.Group();
@@ -25,6 +25,29 @@ export function buildDeskWorker(chair) {
         add(person, rbox(0.135, 0.09, 0.25, 0.035), shoes, [x, 0.08, 0.46]);
         add(person, rbox(0.14, 0.025, 0.255, 0.012), sole, [x, 0.032, 0.46]);
     }
+
+    // A separate open-palm greeting pose keeps all five fingers clearly visible.
+    // Typing hands are deliberately small; rotating them upward made a closed fist silhouette.
+    const wavingArm = new THREE.Group();
+    person.add(wavingArm);
+    segment(wavingArm, [0.18, 0.94, 0.08], [0.34, 1.06, 0.06], 0.06, shirt);
+    const wavingForearm = new THREE.Group();
+    wavingForearm.position.set(0.34, 1.06, 0.06);
+    wavingArm.add(wavingForearm);
+    add(wavingForearm, new THREE.SphereGeometry(0.043, 12, 8), skin);
+    segment(wavingForearm, [0, 0, 0], [0, 0.19, 0], 0.033, skin);
+    const palm = new THREE.Group();
+    palm.position.set(0, 0.24, 0);
+    wavingForearm.add(palm);
+    add(palm, rbox(0.105, 0.105, 0.038, 0.014), skin);
+    // Four spread, rounded fingers of similar lengths, plus an outward thumb.
+    for (const [x, length, spread] of [[-0.042, 0.075, -0.18], [-0.014, 0.085, -0.06], [0.014, 0.082, 0.06], [0.042, 0.07, 0.18]]) {
+        const finger = add(palm, rbox(0.019, length, 0.026, 0.008), skin, [x, 0.043 + length / 2, 0]);
+        finger.rotation.z = -spread;
+    }
+    const thumb = add(palm, rbox(0.023, 0.062, 0.028, 0.009), skin, [-0.07, 0.015, 0]);
+    thumb.rotation.z = -0.85;
+    wavingArm.visible = false;
 
     const torso = add(person, rbox(0.34, 0.43, 0.22, 0.065), shirt, [0, 0.79, 0.07]);
     torso.rotation.x = 0.13;
@@ -78,24 +101,29 @@ export function buildDeskWorker(chair) {
         new THREE.MeshBasicMaterial({ color: 0xff8fad, side: THREE.DoubleSide }),
         [0, 1.52, 0.1], { cast: false, receive: false });
     heart.visible = false;
-    let greetedAt = -Infinity;
+    let greetingElapsed = 3;
+    let previousTime = 0;
     return {
         group: person,
-        greet(time) { greetedAt = time; },
+        greet(time) { greetingElapsed = 0; previousTime = time; },
         update(time, reducedMotion) {
-            const elapsed = time - greetedAt;
+            greetingElapsed += Math.max(0, Math.min(time - previousTime, 0.05));
+            previousTime = time;
+            const elapsed = greetingElapsed;
             const greeting = elapsed >= 0 && elapsed < 3;
-            const ease = greeting && !reducedMotion
-                ? Math.min(1, elapsed / 0.35, (3 - elapsed) / 0.45) : 0;
+            const ease = greeting
+                ? (reducedMotion ? 1 : Math.min(1, elapsed / 0.35, (3 - elapsed) / 0.45)) : 0;
             const wave = greeting && !reducedMotion ? Math.sin(elapsed * 10) * 0.18 * ease : 0;
             // Tiny alternating keystrokes; reduced-motion visitors see a still pose.
             forearms.forEach((arm, i) => {
                 const typing = reducedMotion ? 0 : Math.sin(time * 7 + i * Math.PI) * 0.022;
-                arm.rotation.x = i === 1 ? typing * (1 - ease) - ease * 1.3 : typing * (1 - ease);
-                arm.rotation.z = i === 1 ? wave : 0;
+                arm.rotation.x = typing * (1 - ease);
+                arm.rotation.z = 0;
             });
-            shoulders[1].rotation.z = ease * 2.15;
-            shoulders[1].rotation.x = -ease * 0.4;
+            shoulders[1].visible = !greeting;
+            wavingArm.visible = greeting;
+            wavingForearm.rotation.z = wave;
+            wavingArm.rotation.z = (1 - ease) * -0.45;
             head.rotation.y = ease * 2.4;
             head.rotation.x = 0.075 + (reducedMotion ? 0 : Math.sin(time * 1.3) * 0.012);
             head.rotation.z = ease * 0.12;

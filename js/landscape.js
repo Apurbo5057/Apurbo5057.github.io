@@ -1,6 +1,6 @@
 // Original procedural mountain scenery: no models, stock photos, or texture downloads.
-import { THREE } from './three.js?v=8';
-import { add, std, rng } from './util.js?v=8';
+import { THREE } from './three.js?v=13';
+import { add, std, rng } from './util.js?v=13';
 
 export function buildLandscape(world) {
     const backdrop = new THREE.MeshBasicMaterial({ toneMapped: false });

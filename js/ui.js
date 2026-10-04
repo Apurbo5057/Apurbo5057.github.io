@@ -1,6 +1,6 @@
 // 2D layer: chips, markers and the detail panel. Works even without WebGL.
-import { THREE } from './three.js?v=8';
-import { HOTSPOTS, DOOR, byId } from './config.js?v=8';
+import { THREE } from './three.js?v=13';
+import { HOTSPOTS, DOOR, byId } from './config.js?v=13';
 
 const $ = (s) => document.querySelector(s);
 

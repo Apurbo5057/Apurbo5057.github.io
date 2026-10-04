@@ -1,6 +1,6 @@
 // Everything with text or a pattern on it is drawn on a canvas at load time — no image assets.
-import { canvasTex, rng, setFit, wobble, sketchRect, sketchArrow, roundRect, star, TAU } from './util.js?v=8';
-import { MONTHS } from './clock.js?v=8';
+import { canvasTex, rng, setFit, wobble, sketchRect, sketchArrow, roundRect, star, TAU } from './util.js?v=13';
+import { MONTHS } from './clock.js?v=13';
 
 export function plankTexture() {
     return canvasTex(1024, 1024, (c, W, H) => {
