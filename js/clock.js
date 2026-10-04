@@ -24,7 +24,8 @@ export function skyPhase(h) {
 
 const badge = document.getElementById('clock');
 const listeners = [];
-let override = null;  // 'day' | 'night' once the visitor flips the badge
+// Start in a cosy night office; explicit hour previews still follow the clock.
+let override = params.has('hour') ? null : 'night';
 let last = '';
 
 function read() {

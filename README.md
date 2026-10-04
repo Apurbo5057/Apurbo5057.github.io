@@ -20,6 +20,9 @@ Open http://127.0.0.1:8765. Preview day with `?hour=13`, night with `?hour=22`.
 Use `#office` to enter immediately or `#projects` to open a section. The clock
 switches lighting. Arrow keys switch panels; Escape closes them.
 
+Dark mode is the default. Click the seated character or the “Say hi” button
+for a friendly wave and heart. Reduced-motion visitors get a still greeting.
+
 ## Editing
 
 - `index.html`: profile, links, and seven content templates. Edit content here.

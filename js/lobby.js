@@ -29,7 +29,7 @@ for (const h of HOTSPOTS) {
     directory.append(b);
 }
 
-if (!canHover) document.getElementById('hint').textContent = 'Tap a numbered object · drag to look around';
+if (!canHover) document.getElementById('hint').textContent = 'Tap objects to explore · tap me to say hi ♡';
 
 let timer;
 

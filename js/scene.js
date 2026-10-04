@@ -2,11 +2,11 @@
 import { THREE } from './three.js';
 import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from './config.js';
 import { UP, setMaxAnisotropy } from './util.js';
-import { dhakaNow, onDaylight } from './clock.js';
-import { skyTexture, calendarTexture } from './textures.js';
-import { buildRoom } from './room.js?v=6';
+import { dhakaNow, onDaylight } from './clock.js?v=7';
+import { skyTexture, calendarTexture } from './textures.js?v=7';
+import { buildRoom } from './room.js?v=7';
 import { state, view, markers, measureLabels, openPanel, closePanel, showSceneError, canvas, panel, tooltip } from './ui.js';
-import { exitOffice } from './lobby.js';
+import { exitOffice } from './lobby.js?v=7';
 
 async function fontsReady() {
     if (!document.fonts) return;
@@ -56,6 +56,18 @@ export async function initScene() {
     }
 
     const { skyMat, calendarPage, robot, door, lights, deskWorker } = buildRoom({ scene, world, register, entries });
+    deskWorker.group.userData.entry = {
+        def: { id: 'desk-worker', kind: 'gesture' }, group: deskWorker.group,
+    };
+    const greeting = document.getElementById('greeting');
+    let greetingTimer;
+    function greetWorker() {
+        deskWorker.greet(clock.elapsedTime);
+        greeting.hidden = false;
+        clearTimeout(greetingTimer);
+        greetingTimer = setTimeout(() => { greeting.hidden = true; }, 3000);
+    }
+    document.querySelector('[data-action="greet"]').addEventListener('click', greetWorker);
 
     /* ---------- time of day ---------- */
     // Night is a late study session: the room goes dim and cool, and the warm lamps take over.
@@ -114,7 +126,7 @@ export async function initScene() {
     }
 
     function setGlow(entry, on) {
-        if (!entry || entry.def.kind === 'tooltip') return;
+        if (!entry || ['tooltip', 'gesture'].includes(entry.def.kind)) return;
         entry.group.traverse((o) => {
             if (!o.isMesh) return;
             for (const m of [].concat(o.material)) {
@@ -137,8 +149,9 @@ export async function initScene() {
         }
         const pointable = hover3D && hover3D.def.kind !== 'tooltip' && hover3D.def.id !== state.current?.id;
         canvas.classList.toggle('hovering', !!pointable);
-        if (hover3D?.def.kind === 'tooltip') {
-            tooltip.textContent = `Dhaka · ${clockLabel} BST`;
+        if (['tooltip', 'gesture'].includes(hover3D?.def.kind)) {
+            tooltip.textContent = hover3D.def.kind === 'gesture'
+                ? 'Click to say hi ♡' : `Dhaka · ${clockLabel} BST`;
             tooltip.style.transform = `translate(${pointer.cx + 14}px, ${pointer.cy + 16}px)`;
             tooltip.classList.add('show');
         } else {
@@ -189,7 +202,9 @@ export async function initScene() {
         if (dragged) { dragged = false; return; }
         const entry = pickAt(e.clientX, e.clientY);
         const kind = entry?.def.kind;
-        if (kind === 'panel') {
+        if (kind === 'gesture') {
+            greetWorker();
+        } else if (kind === 'panel') {
             if (state.current?.id === entry.def.id) return;
             openPanel(entry.def.id);
             if (entry.def.id === 'projects') robot.wave = 0;

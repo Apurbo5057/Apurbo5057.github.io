@@ -19,9 +19,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231f4e8c%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EMA%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="css/office.css?v=5">
+    <link rel="stylesheet" href="css/office.css?v=7">
 </head>
-<body>
+<body data-theme="night">
 
     <canvas id="scene" aria-hidden="true"></canvas>
     <div id="markers" aria-label="Objects in the office"></div>
@@ -104,9 +104,11 @@
     </section>
 
     <!-- Section chips: keyboard/mobile-friendly way into every panel -->
-    <p class="hint" id="hint">Click a numbered object to open it · drag to look around</p>
+    <p class="hint" id="hint">Click objects to explore · click me to say hi ♡ · drag to look around</p>
+    <p class="greeting" id="greeting" role="status" aria-live="polite" hidden>Hi there! Thanks for stopping by ♡</p>
     <nav class="chips" id="chips" aria-label="Sections">
         <button class="chip-tour" data-action="tour">Tour →</button>
+        <button class="chip-tour" data-action="greet" aria-label="Say hi to the seated character">Say hi ♡</button>
     </nav>
 
     <!-- Detail panel -->
@@ -213,6 +215,6 @@
             el.hidden = false;
         }, 10000);
     </script>
-    <script type="module" src="js/main.js?v=6"></script>
+    <script type="module" src="js/main.js?v=7"></script>
 </body>
 </html>

@@ -2,11 +2,11 @@
 import { THREE } from './three.js';
 import { DOOR, ROOM, byId } from './config.js';
 import { std, rbox, add, rod, rng, TAU } from './util.js';
-import { buildDeskWorker } from './character.js';
+import { buildDeskWorker } from './character.js?v=7';
 import {
     plankTexture, whiteboardTexture, awardTexture, stickyTexture, spineTexture, envelopeTexture,
     keyboardTexture, signTexture, monitorTexture,
-} from './textures.js';
+} from './textures.js?v=7';
 
 export function buildRoom({ scene, world, register, entries }) {
     // Materials and lights the time of day changes; scene.js drives them.
