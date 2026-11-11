@@ -89,8 +89,8 @@ const pubs = [
     links: [] },
   { id: 'apurbo2026chordal', year: 2026, venue: 'Thesis', type: 'Preprint', color: 'bg-ink text-paper', status: 'Ongoing',
     title: 'Prescribed Degree Distributions in Chordal Graphs of Bounded Clique Number',
-    authors: [[ME_AUTH, 1]],
-    venueFull: 'Undergraduate thesis, Department of CSE, BUET, supervised by Dr. Md. Saidur Rahman (October 2026)',
+    authors: [[ME_AUTH, 1], 'Md. Saidur Rahman'],
+    venueFull: 'Undergraduate thesis, Department of CSE, BUET (October 2026)',
     fig: 'chordal-thesis.webp', links: [] },
 ];
 
