@@ -16,7 +16,7 @@ const me = {
   email: 'mosharaf.apurbo57@gmail.com',
   phone: '+8801711127583',
   city: 'Dhaka, Bangladesh',
-  github: 'https://github.com/Roll-no-57',
+  github: 'https://github.com/Apurbo5057',
   linkedin: 'https://www.linkedin.com/in/m-a-hossain-884aa52a0/',
   cv: 'assets/cv/Apurbo-CV.pdf',
   photo: 'assets/img/profile.jpg',
@@ -123,11 +123,11 @@ const researchExp = [
 ];
 
 const projects = [
-  { title: 'Trip.AI', sub: 'AI Travel Planning Platform', date: 'Oct 2024', url: 'https://github.com/Roll-no-57/Trip.AI', text: 'Agentic, personalised itinerary generation with real-time weather updates, RAG-based natural-language image search, and AI-generated travel blogs and vlogs. 5th place and Best Documentation at BUET CSE Fest Hackathon 2024.', tags: ['Agentic AI', 'RAG'] },
-  { title: 'C-to-Intel-8086 Compiler', sub: 'C++17, ANTLR 4', date: 'Jan 2025 - Jun 2025', url: 'https://github.com/Roll-no-57/C-Compiler', text: 'Full front end (lexer, semantic analysis, scoped symbol table) and 8086 back end with BP-relative stack frames, recursion and arrays; peephole optimiser.', tags: ['Compilers', 'Systems'] },
-  { title: 'Mini-PC: 8-bit MIPS Processor', sub: 'Logisim', date: 'Oct 2024', url: 'https://github.com/Roll-no-57/Mini-PC', text: 'Designed an 8-bit MIPS processor from scratch with control logic, ALU, memory access and I/O, plus a display module and a Snake game running on it.', tags: ['Computer architecture'] },
-  { title: 'Quantum ML Benchmarking', sub: 'Biomedical data', date: '', url: 'https://github.com/Roll-no-57/quantum-benchmarking', text: 'Benchmarking framework for quantum feature encodings and ansatz models with SHAP/LASSO/PCA feature selection and convergence visualisations.', tags: ['Scientific ML'] },
-  { title: 'BookSphere', sub: 'E-commerce platform', date: 'Jan 2024 - Feb 2024', url: 'https://github.com/Roll-no-57/Project_BookSphere', text: 'An Oracle-powered, Bootstrap-based e-commerce site replicating Rokomari.com’s core features.', tags: ['Full-stack'] },
+  { title: 'Trip.AI', sub: 'AI Travel Planning Platform', date: 'Oct 2024', url: 'https://github.com/Apurbo5057/Trip.AI', text: 'Agentic, personalised itinerary generation with real-time weather updates, RAG-based natural-language image search, and AI-generated travel blogs and vlogs. 5th place and Best Documentation at BUET CSE Fest Hackathon 2024.', tags: ['Agentic AI', 'RAG'] },
+  { title: 'C-to-Intel-8086 Compiler', sub: 'C++17, ANTLR 4', date: 'Jan 2025 - Jun 2025', url: 'https://github.com/Apurbo5057/C-Compiler', text: 'Full front end (lexer, semantic analysis, scoped symbol table) and 8086 back end with BP-relative stack frames, recursion and arrays; peephole optimiser.', tags: ['Compilers', 'Systems'] },
+  { title: 'Mini-PC: 8-bit MIPS Processor', sub: 'Logisim', date: 'Oct 2024', url: 'https://github.com/Apurbo5057/Mini-PC', text: 'Designed an 8-bit MIPS processor from scratch with control logic, ALU, memory access and I/O, plus a display module and a Snake game running on it.', tags: ['Computer architecture'] },
+  { title: 'Quantum ML Benchmarking', sub: 'Biomedical data', date: '', url: 'https://github.com/Apurbo5057/quantum-benchmarking', text: 'Benchmarking framework for quantum feature encodings and ansatz models with SHAP/LASSO/PCA feature selection and convergence visualisations.', tags: ['Scientific ML'] },
+  { title: 'BookSphere', sub: 'E-commerce platform', date: 'Jan 2024 - Feb 2024', url: 'https://github.com/Apurbo5057/Project_BookSphere', text: 'An Oracle-powered, Bootstrap-based e-commerce site replicating Rokomari.com’s core features.', tags: ['Full-stack'] },
 ];
 
 const honors = [
