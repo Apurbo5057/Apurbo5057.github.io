@@ -1,6 +1,6 @@
 .DS_Store
-__pycache__/
 _site/
+node_modules/
 assets/cv/*.aux
 assets/cv/*.log
 assets/cv/*.out
