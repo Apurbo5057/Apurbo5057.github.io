@@ -226,7 +226,7 @@ function page({ dir, title, description, section, body, home = false, scripts = 
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaf7">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101114">
 <link rel="icon" href="${p}assets/img/profile.jpg" type="image/jpeg">
-<link rel="preload" href="${p}fonts/84adbee2f2a7cb50.p.woff2" as="font" crossorigin type="font/woff2">
+<link rel="preload" href="${p}assets/fonts/84adbee2f2a7cb50.p.woff2" as="font" crossorigin type="font/woff2">
 <link rel="stylesheet" href="${p}assets/css/site.css">
 <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()</script>
 </head>
