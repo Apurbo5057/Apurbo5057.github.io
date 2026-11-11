@@ -67,12 +67,12 @@ const skills = [
 
 const ME_AUTH = 'Md. Mosharaf Hossain Apurbo';
 const pubs = [
-  { id: 'apurbo2026sign-spotting', year: 2026, venue: 'WSLP 2026', type: 'Workshop', color: 'bg-amber-600 text-white', status: 'Published',
+  { id: 'apurbo2026sign-spotting', year: 2026, venue: 'WSLP@EMNLP26', type: 'Workshop', color: 'bg-amber-600 text-white', status: 'Published',
     title: 'Multiple-Instance Contrastive Alignment for Pose-Based Sign Spotting',
     authors: [[ME_AUTH, 1], 'Md. Asif Ali', 'Kazi Reyazul Hasan'],
     venueFull: 'Proceedings of the Second Workshop on Sign Language Processing (WSLP 2026), co-located with EMNLP 2026, Budapest, Hungary',
     fig: 'mica.webp', links: [['Paper', 'https://aclanthology.org/2026.wslp-1.8/']] },
-  { id: 'ali2026sign-retrieval', year: 2026, venue: 'WSLP 2026', type: 'Workshop', color: 'bg-amber-600 text-white', status: 'Published',
+  { id: 'ali2026sign-retrieval', year: 2026, venue: 'WSLP@EMNLP26', type: 'Workshop', color: 'bg-amber-600 text-white', status: 'Published',
     title: 'Metric-Learning Retrieval for Cross-Signer Isolated Sign Language Recognition',
     authors: ['Md. Asif Ali', [ME_AUTH, 1], 'Kazi Reyazul Hasan'],
     venueFull: 'Proceedings of the Second Workshop on Sign Language Processing (WSLP 2026), co-located with EMNLP 2026, Budapest, Hungary',
